@@ -115,6 +115,7 @@
                 app:layout_constraintLeft_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvDailyForecastTitle"
                 android:layout_marginTop="8dp"
+
                 />
 
 
