@@ -60,6 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/PoppinsMediumExtraLarge"
+                    android:layout_marginStart="4dp"
                     android:textSize="128sp"
                     />
 
@@ -113,7 +114,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintLeft_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvDailyForecastTitle"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 />
 
 

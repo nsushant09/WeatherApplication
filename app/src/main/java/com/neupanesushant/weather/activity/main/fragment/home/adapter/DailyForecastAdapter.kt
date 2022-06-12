@@ -34,6 +34,8 @@ class DailyForecastAdapter(val viewModel : HomeViewModel , val list : List<Daily
         holder.sunsetTime.text = viewModel.currentLocationWeather.value?.timezone_offset?.toLong()
             ?.let { viewModel.convertTimeToLocalTime(dailyObject.sunset, it) }
 
+        holder.day.text = viewModel.convertTimeToDay(dailyObject.dt)
+
     }
     override fun getItemCount(): Int {
         if(list.size > 7){

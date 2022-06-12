@@ -18,6 +18,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -139,5 +140,21 @@ class HomeViewModel(val application : Application) : ViewModel() {
 
         val timeString = String.format("%02d:%02d", hours, minutes)
         return timeString
+
+    }
+
+    fun convertTimeToDay(time : Long) : String{
+        var day : Int = TimeUnit.SECONDS.toDays(time).toInt()
+        day %= 7
+        when(day){
+            1 -> return "Saturday"
+            2 -> return "Sunday"
+            3 -> return "Monday"
+            4 -> return "Tuesday"
+            5 -> return "Wednesday"
+            6 -> return "Thursday"
+            0 -> return "Friday"
+            else -> return "Error"
+        }
     }
 }
