@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    tools:context=".activity.main.fragment.home.HomeFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="8dp">
+
+            <LinearLayout
+                android:id="@+id/llIconAndTextHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/ivHeaderWeatherIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:tint="@color/grey" />
+
+                <TextView
+                    android:id="@+id/tvHeaderWeatherDescription"
+                    style="@style/PoppinsRegularSmallGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llIconAndTextHeader"
+                android:gravity="center"
+                >
+
+                <TextView
+                    android:id="@+id/tvTemperatureMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/PoppinsMediumExtraLarge"
+                    android:textSize="128sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tvLocationMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-40dp"
+                    style="@style/PoppinsRegularLargeSecondary"
+                    />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tvHourlyForecastTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llMain"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                style="@style/PoppinsRegularMediumSecondary"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvHourlyForecast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintLeft_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvHourlyForecastTitle"
+                android:layout_marginTop="8dp"
+                />
+
+            <TextView
+                android:id="@+id/tvDailyForecastTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvHourlyForecast"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                style="@style/PoppinsRegularMediumSecondary"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDailyForecast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintLeft_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDailyForecastTitle"
+                android:layout_marginTop="4dp"
+                />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</FrameLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="120dp"
+    android:layout_height="180dp"
+    android:background="@drawable/recycler_element_background"
+    android:padding="12dp"
+    android:layout_marginHorizontal="8dp"
+    >
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/PoppinsMedium16MediumBlack"
+        android:layout_gravity="center"/>
+
+    <ImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="4dp"
+        app:tint="@color/black"
+        android:contentDescription="@string/icon_image" />
+
+    <TextView
+        android:id="@+id/tvWeatherType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        style="@style/PoppinsRegularSmallGrey"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/tvTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="2dp"
+        style="@style/PoppinsMedium36LargePrimaryVariant"
+        android:textColor="@color/primaryvariant"
+        android:layout_gravity="center"
+        />
+
+
+</LinearLayout>

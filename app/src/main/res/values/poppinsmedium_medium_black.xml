@@ -1,0 +1,7 @@
+<resources>
+    <style name="PoppinsMedium16MediumBlack">
+        <item name="fontFamily">@font/poppinsmedium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>

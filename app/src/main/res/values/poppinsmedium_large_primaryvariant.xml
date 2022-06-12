@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="PoppinsMedium36LargePrimaryVariant">
+        <item name="fontFamily">@font/poppinsmedium</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:textColor">@color/primaryvariant</item>
+    </style>
+</resources>
