@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModel
 import com.neupanesushant.weather.R
 import com.neupanesushant.weather.WeatherAPI
 import com.neupanesushant.weather.apiserviceclass.LocationWeather
-import com.neupanesushant.weather.citycoordinates.CityDetails
 import com.neupanesushant.weather.currentLocation
 import retrofit2.Call
 import retrofit2.Callback
@@ -53,32 +52,6 @@ class HomeViewModel(val application : Application) : ViewModel() {
         return countryName
     }
 
-    fun getCityCoordinates(cityName : String){
-        val retrofit = Retrofit
-            .Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_URL_CITY_COORD)
-            .build()
-            .create(WeatherAPI::class.java)
-
-        val retrofitData = retrofit.getCityCoordinates(cityName, KEY)
-
-        retrofitData.enqueue(object : Callback<List<CityDetails>>{
-            override fun onResponse(
-                call: Call<List<CityDetails>>,
-                response: Response<List<CityDetails>>
-            ) {
-                if(response != null){
-                    Log.i(TAG, "Successfull response in city details ")
-                }
-            }
-
-            override fun onFailure(call: Call<List<CityDetails>>, t: Throwable) {
-                Log.i(TAG, "Error in city details response")
-            }
-
-        })
-    }
 
     fun getLocationWeatherFromAPI(latitude : String, longitude : String ){
         val retrofit = Retrofit

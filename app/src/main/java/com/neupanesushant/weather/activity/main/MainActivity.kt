@@ -25,17 +25,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         replaceFragment(homeFragment)
-        binding.etSearchBar.setOnClickListener{
-            binding.etSearchBar.requestFocus()
-            replaceFragment(searchFragment)
-        }
-        binding.etSearchBar.setOnFocusChangeListener { view, b ->
-            replaceFragment(searchFragment)
-        }
-        binding.ivSearchBtn.setOnClickListener{
-            replaceFragment(settingsFragment)
-        }
-
 
     }
 
@@ -50,7 +39,6 @@ class MainActivity : AppCompatActivity() {
             }
             fragmentTransaction.commit()
         }
-
     }
 
 }

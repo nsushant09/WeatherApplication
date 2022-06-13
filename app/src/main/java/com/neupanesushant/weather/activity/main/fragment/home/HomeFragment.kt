@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.neupanesushant.weather.R
 import com.neupanesushant.weather.activity.main.fragment.home.adapter.DailyForecastAdapter
 import com.neupanesushant.weather.activity.main.fragment.home.adapter.HourlyForecastAdapter
+import com.neupanesushant.weather.activity.main.fragment.search.SearchFragment
+import com.neupanesushant.weather.activity.main.fragment.settings.SettingsFragment
 import com.neupanesushant.weather.capitalizeWords
 import com.neupanesushant.weather.databinding.FragmentHomeBinding
 import java.text.SimpleDateFormat
@@ -33,6 +35,9 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel : HomeViewModel
     private lateinit var application : Application
 
+    private val searchFragment = SearchFragment()
+    private val settingFragment = SettingsFragment()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,6 +53,19 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        binding.apply{
+            etSearchBar.setOnFocusChangeListener { view, b ->
+                replaceFragment(searchFragment)
+            }
+            etSearchBar.setOnClickListener{
+                it.requestFocus()
+                replaceFragment(searchFragment)
+            }
+            ivSettingsBtn.setOnClickListener {
+                replaceFragment(settingFragment)
+            }
+
+        }
         binding.rvHourlyForecast.layoutManager = GridLayoutManager(context, 1, LinearLayoutManager.HORIZONTAL, false)
         binding.rvDailyForecast.layoutManager = GridLayoutManager(context, 1, LinearLayoutManager.HORIZONTAL, false)
 
@@ -75,6 +93,14 @@ class HomeFragment : Fragment() {
 
         })
 
+    }
+
+    fun replaceFragment(fragment : Fragment){
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container, fragment)
+        fragmentTransaction.isAddToBackStackAllowed
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 
 }

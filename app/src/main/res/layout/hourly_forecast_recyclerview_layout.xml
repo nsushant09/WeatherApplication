@@ -44,6 +44,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginStart="2dp"
         style="@style/PoppinsMedium36LargePrimaryVariant"
+        android:textSize="30sp"
         android:textColor="@color/primaryvariant"
         android:layout_gravity="center"
         />

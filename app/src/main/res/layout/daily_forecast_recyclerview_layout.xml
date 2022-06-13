@@ -83,7 +83,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="18dp"
-                android:src="@drawable/ic_sunrise"
+                android:src="@drawable/ic_sunset"
                 android:contentDescription="@string/icon_image"
                 app:tint="@color/black" />
 
@@ -103,10 +103,10 @@
         android:id="@+id/tvDayName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"
         style="@style/PoppinsMedium16MediumBlack"
         android:textSize="14sp"
+        android:layout_marginTop="6dp"
         android:textColor="@color/primaryvariant"
         />
 

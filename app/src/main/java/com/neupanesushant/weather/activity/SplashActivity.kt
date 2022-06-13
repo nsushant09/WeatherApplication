@@ -49,6 +49,11 @@ class SplashActivity : AppCompatActivity() {
 
         }
     }
+
+    override fun onRestart() {
+        super.onRestart()
+        getCurrentLocation()
+    }
     fun startNextActivity(){
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
