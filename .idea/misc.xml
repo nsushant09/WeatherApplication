@@ -17,10 +17,12 @@
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.44249679350149634" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.48525010688328346" />
         <entry key="app/src/main/res/layout/activity_onboarding_screeen.xml" value="0.5911458333333334" />
+        <entry key="app/src/main/res/layout/activity_searched_location.xml" value="0.3189397178281317" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.48525010688328346" />
         <entry key="app/src/main/res/layout/daily_forecast_recyclerview_layout.xml" value="0.4843950406156477" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4625908507909363" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.4625908507909363" />
+        <entry key="app/src/main/res/layout/fragment_searched_location.xml" value="0.33133817870884996" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.48525010688328346" />
         <entry key="app/src/main/res/layout/hourly_forecast_recyclerview_layout.xml" value="0.4843950406156477" />
       </map>

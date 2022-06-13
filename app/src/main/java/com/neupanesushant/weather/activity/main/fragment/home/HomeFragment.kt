@@ -54,13 +54,11 @@ class HomeFragment : Fragment() {
 
 
         binding.apply{
-            etSearchBar.setOnFocusChangeListener { view, b ->
+
+            tvSearchBar.setOnClickListener {
                 replaceFragment(searchFragment)
             }
-            etSearchBar.setOnClickListener{
-                it.requestFocus()
-                replaceFragment(searchFragment)
-            }
+
             ivSettingsBtn.setOnClickListener {
                 replaceFragment(settingFragment)
             }
@@ -95,8 +93,10 @@ class HomeFragment : Fragment() {
 
     }
 
+    @SuppressLint("PrivateResource")
     fun replaceFragment(fragment : Fragment){
         val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(androidx.fragment.R.animator.fragment_fade_enter, androidx.fragment.R.animator.fragment_fade_exit)
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.isAddToBackStackAllowed
         fragmentTransaction.addToBackStack(null)

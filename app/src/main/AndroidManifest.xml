@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Weather"
         tools:targetApi="31">
         <activity
+            android:name=".SearchedLocationActivity"
+            android:exported="false" />
+        <activity
             android:name="com.neupanesushant.weather.activity.main.MainActivity"
             android:exported="false" />
         <activity
