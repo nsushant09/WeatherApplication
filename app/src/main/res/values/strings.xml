@@ -6,4 +6,6 @@
     <string name="search">Search</string>
     <string name="settings_icon_in_main_activity">Settings icon in Main Activity</string>
     <string name="icon_image">Icon Image</string>
+    <string name="search_results">Search Results</string>
+    <string name="no_results_found">No Results Found</string>
 </resources>

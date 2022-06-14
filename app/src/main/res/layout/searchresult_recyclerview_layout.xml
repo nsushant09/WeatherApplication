@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/search_result_card_bg"
+    android:layout_marginEnd="4dp"
+    android:paddingHorizontal="16dp">
+
+    <LinearLayout
+        android:id="@+id/llLocationInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="4dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvCityName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mountain View"
+                style="@style/PoppinsMedium16MediumBlack"
+                />
+
+            <TextView
+                android:id="@+id/tvCountryName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=", USA"
+                style="@style/PoppinsMedium16MediumBlack"
+                android:textColor="@color/grey"
+                android:layout_toEndOf="@id/tvCityName"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/llLocationInfo"
+        android:layout_marginStart="4dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvLatitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lat : 27.71"
+                style="@style/PoppinsRegularSmallGrey"
+                />
+
+            <TextView
+                android:id="@+id/tvLongitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Lon : 123.12"
+                style="@style/PoppinsRegularSmallGrey"
+                android:textColor="@color/grey"
+                android:layout_toEndOf="@id/tvLatitude"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:cardCornerRadius="50dp"
+        app:cardBackgroundColor="@color/primaryvariant"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        >
+
+        <TextView
+            android:id="@+id/tvCurrentTemperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="22"
+            android:layout_gravity="center"
+            style="@style/PoppinsMedium16MediumBlack"
+            android:textColor="@color/secondary_white"
+            android:layout_marginTop="2dp"
+            />
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</RelativeLayout>

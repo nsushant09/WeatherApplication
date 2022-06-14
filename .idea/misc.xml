@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/drawable/ic_sunset.xml" value="0.5155" />
         <entry key="app/src/main/res/drawable/ic_weather_logo.xml" value="0.508" />
         <entry key="app/src/main/res/drawable/recycler_element_background.xml" value="0.5155" />
+        <entry key="app/src/main/res/drawable/search_result_card_bg.xml" value="0.534" />
         <entry key="app/src/main/res/drawable/searchfield_bg.xml" value="0.546" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.44249679350149634" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.48525010688328346" />
@@ -25,6 +26,7 @@
         <entry key="app/src/main/res/layout/fragment_searched_location.xml" value="0.33133817870884996" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.48525010688328346" />
         <entry key="app/src/main/res/layout/hourly_forecast_recyclerview_layout.xml" value="0.4843950406156477" />
+        <entry key="app/src/main/res/layout/searchresult_recyclerview_layout.xml" value="0.4843950406156477" />
       </map>
     </option>
   </component>

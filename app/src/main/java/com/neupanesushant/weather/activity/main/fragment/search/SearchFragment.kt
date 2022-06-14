@@ -14,11 +14,14 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.EditorInfo.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.neupanesushant.weather.activity.main.fragment.search.adapter.SearchResultAdapter
 import com.neupanesushant.weather.databinding.FragmentSearchBinding
 import kotlinx.coroutines.Job
 import java.security.Key
@@ -51,6 +54,11 @@ class SearchFragment : Fragment() {
 
 
         setupSearchBar()
+        binding.apply {
+            llSearchResults.visibility = View.GONE
+            progressBar.visibility = View.GONE
+            tvNoResultFound.visibility = View.GONE
+        }
         binding.ivHomeBtn.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
@@ -60,6 +68,11 @@ class SearchFragment : Fragment() {
                 if(actionId == IME_ACTION_SEARCH || actionId == IME_ACTION_DONE){
                     binding.etSearchBar.text.apply{
                         if(this != null && this.length != 0){
+                            binding.apply {
+                                llSearchResults.visibility = View.GONE
+                                progressBar.visibility = View.VISIBLE
+                                tvNoResultFound.visibility = View.GONE
+                            }
                             viewModel.getSearchResult(this.toString())
                         }
                     }
@@ -67,6 +80,27 @@ class SearchFragment : Fragment() {
                 return false
             }
 
+        })
+        viewModel.isNoResultFound.observe(viewLifecycleOwner, Observer {
+            if(it){
+                binding.tvNoResultFound.visibility = View.VISIBLE
+                binding.llSearchResults.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
+            }else{
+                binding.tvNoResultFound.visibility = View.GONE
+            }
+        })
+
+        viewModel.searchedLocationDetailsList.observe(viewLifecycleOwner, Observer {
+            binding.progressBar.visibility = View.GONE
+            if(it.size == 0 || it == null){
+                binding.tvNoResultFound.visibility = View.VISIBLE
+            }else{
+                binding.rvSearchResults.layoutManager = LinearLayoutManager(context)
+                val adapter = SearchResultAdapter(viewModel, it)
+                binding.rvSearchResults.adapter = adapter
+                binding.llSearchResults.visibility = View.VISIBLE
+            }
         })
 
     }
