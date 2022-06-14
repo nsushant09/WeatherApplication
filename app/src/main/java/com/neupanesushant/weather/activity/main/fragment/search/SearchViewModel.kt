@@ -10,11 +10,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.neupanesushant.weather.WeatherAPI
 import com.neupanesushant.weather.apiserviceclass.LocationWeather
+import com.neupanesushant.weather.capitalizeWords
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.NullPointerException
 import java.util.*
 
 class SearchViewModel(val application: Application) : ViewModel() {
@@ -48,7 +50,7 @@ class SearchViewModel(val application: Application) : ViewModel() {
             _addressList.value = geocoder.getFromLocationName(cityName, 10)
             if (addressList.value != null && addressList.value?.size != 0) {
                 _addressList.value?.forEach {
-                    getLocationWeatherFromAPI(it.latitude.toString(), it.longitude.toString(), it)
+                    getLocationWeatherFromAPI(it.latitude.toString(), it.longitude.toString(), it, cityName)
                 }
             }else{
                 _isNoResultFound.value = true
@@ -63,11 +65,16 @@ class SearchViewModel(val application: Application) : ViewModel() {
         val cityName: String
         val geoCoder = Geocoder(application, Locale.getDefault())
         val Address = geoCoder.getFromLocation(lat, long, 1)
-        cityName = Address.get(0).locality
-        return cityName
+        try{
+            cityName = Address.get(0).locality
+            return cityName
+        }catch (e : NullPointerException){
+            Log.i(TAG,"Null pointer exception")
+        }
+        return "nullValue"
     }
 
-    fun getLocationWeatherFromAPI(latitude: String, longitude: String, address: Address) {
+    fun getLocationWeatherFromAPI(latitude: String, longitude: String, address: Address, cityName : String) {
         val retrofit = Retrofit
             .Builder()
             .addConverterFactory(GsonConverterFactory.create())
@@ -85,10 +92,7 @@ class SearchViewModel(val application: Application) : ViewModel() {
                 if (response != null) {
                     arrayListOfLocationWeather.add(
                         LocationDetail(
-                            getCityName(
-                                response.body()!!.lat,
-                                response.body()!!.lon
-                            ),
+                           if(getCityName(response.body()!!.lat, response.body()!!.lon) == "nullValue" ) cityName.capitalizeWords() else getCityName(response.body()!!.lat, response.body()!!.lon),
                             address.countryCode,
                             response.body()!!.lat,
                             response.body()!!.lon,

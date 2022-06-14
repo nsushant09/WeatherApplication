@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="4dp"
         >
 
@@ -22,17 +22,14 @@
 
             <TextView
                 android:id="@+id/tvCityName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mountain View"
                 style="@style/PoppinsMedium16MediumBlack"
-                />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/tvCountryName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=", USA"
                 style="@style/PoppinsMedium16MediumBlack"
                 android:textColor="@color/grey"
                 android:layout_toEndOf="@id/tvCityName"
@@ -59,7 +56,6 @@
                 android:id="@+id/tvLatitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lat : 27.71"
                 style="@style/PoppinsRegularSmallGrey"
                 />
 
@@ -68,7 +64,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Lon : 123.12"
                 style="@style/PoppinsRegularSmallGrey"
                 android:textColor="@color/grey"
                 android:layout_toEndOf="@id/tvLatitude"
@@ -91,7 +86,6 @@
             android:id="@+id/tvCurrentTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="22"
             android:layout_gravity="center"
             style="@style/PoppinsMedium16MediumBlack"
             android:textColor="@color/secondary_white"
