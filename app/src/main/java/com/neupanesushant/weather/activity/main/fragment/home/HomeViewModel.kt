@@ -16,6 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.NullPointerException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -37,12 +38,17 @@ class HomeViewModel(val application : Application) : ViewModel() {
     fun getResults(latitude : String, longitude : String ){
         getLocationWeatherFromAPI(latitude, longitude)
     }
-    fun getCityName( lat : Double, long : Double) : String {
-        val cityName : String
+    fun getCityName(lat: Double, long: Double): String {
+        val cityName: String
         val geoCoder = Geocoder(application, Locale.getDefault())
-        val Address = geoCoder.getFromLocation(lat, long,1)
-        cityName = Address.get(0).locality
-        return cityName
+        val Address = geoCoder.getFromLocation(lat, long, 1)
+        try{
+            cityName = Address.get(0).locality
+            return cityName
+        }catch (e : NullPointerException){
+            Log.i(TAG,"Null pointer exception")
+        }
+        return "nullValue"
     }
 
     fun getCountryName( lat : Double , long : Double ) : String{

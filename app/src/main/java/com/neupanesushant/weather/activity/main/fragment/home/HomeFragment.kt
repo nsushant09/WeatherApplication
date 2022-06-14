@@ -61,6 +61,7 @@ class HomeFragment : Fragment() {
         mainViewModel.locationCoordinates.observe(viewLifecycleOwner, {
             viewModel.getResults(it.latitude.toString(), it.longitude.toString())
         })
+
         binding.apply{
 
             tvSearchBar.setOnClickListener {
@@ -87,7 +88,7 @@ class HomeFragment : Fragment() {
                 tvHeaderWeatherDescription.text = currentWeatherObject.description.capitalizeWords()
 
                 tvTemperatureMain.text = viewModel.convertKelvinToCelsius(it.current.temp)
-                tvLocationMain.text = viewModel.getCityName(it.lat, it.lon)
+                tvLocationMain.text = setLocationName()
 
                 val hourlyForecastString : String = "Hourly Forecast"
                 tvHourlyForecastTitle.text = hourlyForecastString
@@ -101,6 +102,15 @@ class HomeFragment : Fragment() {
 
     }
 
+    fun setLocationName() : String{
+        if(!viewModel.getCityName(viewModel.currentLocationWeather.value?.lat!!, viewModel.currentLocationWeather.value?.lon!!).equals("nullValue", true)){
+            return viewModel.getCityName(viewModel.currentLocationWeather.value?.lat!!, viewModel.currentLocationWeather.value?.lon!!)
+        }else if(mainViewModel.locationName.value != null){
+            return mainViewModel.locationName.value!!
+        }else{
+            return "Unknown"
+        }
+    }
     @SuppressLint("PrivateResource")
     fun replaceFragment(fragment : Fragment){
         val fragmentTransaction = parentFragmentManager.beginTransaction()

@@ -14,12 +14,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.neupanesushant.weather.activity.main.MainViewModel
-import com.neupanesushant.weather.activity.main.fragment.home.HomeViewModel
 import com.neupanesushant.weather.activity.main.fragment.search.adapter.SearchResultAdapter
 import com.neupanesushant.weather.databinding.FragmentSearchBinding
 
@@ -34,9 +32,8 @@ class SearchFragment : Fragment() {
 
     private val  mainViewModel : MainViewModel by activityViewModels()
 
-    val onSearchedResultClick : (Double, Double) -> Unit = {latitude, longitude ->
-        mainViewModel.setLocationCoordinates(latitude, longitude)
-        Toast.makeText(context, "This is clicked", Toast.LENGTH_SHORT).show()
+    val onSearchedResultClick : (String, Double, Double) -> Unit = {cityName, latitude, longitude ->
+        mainViewModel.setLocationCoordinates(cityName,latitude, longitude)
         parentFragmentManager.popBackStack()
     }
 

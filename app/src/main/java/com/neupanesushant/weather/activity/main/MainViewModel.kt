@@ -9,11 +9,14 @@ class MainViewModel(val latAndLonObj : LocationCoordinates): ViewModel() {
     private val _locationCoordinates = MutableLiveData<LocationCoordinates>()
     val locationCoordinates : LiveData<LocationCoordinates> get() = _locationCoordinates
 
+    private val _locationName = MutableLiveData<String>()
+    val locationName :LiveData<String> get() = _locationName
     init{
         _locationCoordinates.value = latAndLonObj
     }
 
-    fun setLocationCoordinates(latitude : Double, longitude : Double){
+    fun setLocationCoordinates(cityName : String, latitude : Double, longitude : Double){
         _locationCoordinates.value = LocationCoordinates(latitude, longitude)
+        _locationName.value = cityName
     }
 }
