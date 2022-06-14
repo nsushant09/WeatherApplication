@@ -12,11 +12,13 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.neupanesushant.weather.activity.main.MainViewModel
 import com.neupanesushant.weather.activity.main.fragment.home.HomeViewModel
 import com.neupanesushant.weather.activity.main.fragment.search.adapter.SearchResultAdapter
 import com.neupanesushant.weather.databinding.FragmentSearchBinding
@@ -30,9 +32,11 @@ class SearchFragment : Fragment() {
     private lateinit var viewModel : SearchViewModel
     private lateinit var application : Application
 
+    private val  mainViewModel : MainViewModel by activityViewModels()
 
     val onSearchedResultClick : (Double, Double) -> Unit = {latitude, longitude ->
-//        homeViewModel.getResults(latitude.toString(), longitude.toString())
+        mainViewModel.setLocationCoordinates(latitude, longitude)
+        Toast.makeText(context, "This is clicked", Toast.LENGTH_SHORT).show()
         parentFragmentManager.popBackStack()
     }
 
@@ -97,7 +101,7 @@ class SearchFragment : Fragment() {
                 binding.tvNoResultFound.visibility = View.VISIBLE
             }else{
                 binding.rvSearchResults.layoutManager = LinearLayoutManager(context)
-                val adapter = SearchResultAdapter(viewModel, it)
+                val adapter = SearchResultAdapter(viewModel, it, onSearchedResultClick)
                 binding.rvSearchResults.adapter = adapter
                 binding.llSearchResults.visibility = View.VISIBLE
             }

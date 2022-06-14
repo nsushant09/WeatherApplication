@@ -9,6 +9,6 @@ class SearchViewModelFactory(val application : Application) : ViewModelProvider.
         if(modelClass.isAssignableFrom(SearchViewModel::class.java)){
             return SearchViewModel(application) as T
         }
-        throw IllegalArgumentException("Message for Illegal Argument Exception in Home View Model Factory")
+        throw IllegalArgumentException("Message for Illegal Argument Exception in Search View Model Factory")
     }
 }

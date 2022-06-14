@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModel
 import com.neupanesushant.weather.R
 import com.neupanesushant.weather.WeatherAPI
 import com.neupanesushant.weather.apiserviceclass.LocationWeather
-import com.neupanesushant.weather.currentLocation
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

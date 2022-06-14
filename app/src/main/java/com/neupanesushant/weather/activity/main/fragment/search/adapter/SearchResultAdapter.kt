@@ -9,7 +9,7 @@ import com.neupanesushant.weather.activity.main.fragment.search.SearchViewModel
 import com.neupanesushant.weather.apiserviceclass.LocationWeather
 import com.neupanesushant.weather.databinding.SearchresultRecyclerviewLayoutBinding
 
-class SearchResultAdapter(val viewModel : SearchViewModel, val list : List<SearchViewModel.LocationDetail>) : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
+class SearchResultAdapter(val viewModel : SearchViewModel, val list : List<SearchViewModel.LocationDetail>, val onSearchResultClick : (Double, Double) -> Unit) : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
 
     inner class ViewHolder(binding : SearchresultRecyclerviewLayoutBinding) : RecyclerView.ViewHolder(binding.root){
         val cityName = binding.tvCityName
@@ -33,6 +33,9 @@ class SearchResultAdapter(val viewModel : SearchViewModel, val list : List<Searc
         holder.latitude.text = String.format("Lat : %02.2f", currentObject.latitude)
         holder.longitude.text = String.format("Lon : %02.2f", currentObject.longitude)
         holder.currentTemperature.text = currentObject.currentTemperature.toString()
+        holder.itemView.setOnClickListener{
+            onSearchResultClick(currentObject.latitude, currentObject.longitude)
+        }
     }
 
     override fun getItemCount(): Int {

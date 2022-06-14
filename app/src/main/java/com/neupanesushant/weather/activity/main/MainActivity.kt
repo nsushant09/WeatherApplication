@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import com.neupanesushant.weather.LocationCoordinates
 import com.neupanesushant.weather.R
 import com.neupanesushant.weather.activity.main.fragment.home.HomeFragment
 import com.neupanesushant.weather.activity.main.fragment.search.SearchFragment
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
 
+    private lateinit var viewModel : MainViewModel
     private val homeFragment = HomeFragment();
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         val latitude = intent.extras?.get("currentLocationLatitude") as Double
         val longitude = intent.extras?.get("currentLocationLongitude") as Double
+        viewModel = ViewModelProvider(this, MainViewModelFactory(LocationCoordinates(latitude, longitude))).get(MainViewModel::class.java)
 
         loadHomeFragment(latitude, longitude)
     }

@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.neupanesushant.weather.*
+import com.neupanesushant.weather.activity.main.MainViewModel
 import com.neupanesushant.weather.activity.main.fragment.home.adapter.DailyForecastAdapter
 import com.neupanesushant.weather.activity.main.fragment.home.adapter.HourlyForecastAdapter
 import com.neupanesushant.weather.activity.main.fragment.search.SearchFragment
@@ -34,6 +36,7 @@ class HomeFragment : Fragment() {
     var locationLatitude : Double = 0.0
     var locationLongitude : Double = 0.0
 
+    private val  mainViewModel : MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +50,7 @@ class HomeFragment : Fragment() {
             locationLatitude = bundle!!.getDouble("latitude")
             locationLongitude = bundle!!.getDouble("longitude")
         }
+
         return binding.root
     }
 
@@ -54,8 +58,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        viewModel.getResults(locationLatitude.toString() , locationLongitude.toString())
+        mainViewModel.locationCoordinates.observe(viewLifecycleOwner, {
+            viewModel.getResults(it.latitude.toString(), it.longitude.toString())
+        })
         binding.apply{
 
             tvSearchBar.setOnClickListener {

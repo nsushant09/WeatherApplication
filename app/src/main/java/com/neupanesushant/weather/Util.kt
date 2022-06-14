@@ -13,3 +13,8 @@ fun String.capitalizeWords(): String = split(" ").map { it.replaceFirstChar {
     ) else it.toString()
 } }.joinToString(" ")
 
+
+data class LocationCoordinates(
+    val latitude : Double,
+    val longitude : Double
+)
