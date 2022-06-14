@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
+    android:background="?attr/colorPrimary"
     tools:context=".activity.main.fragment.home.HomeFragment"
     >
 
@@ -50,7 +50,7 @@
                         android:text="@string/search"
                         android:fontFamily="@font/poppinsregular"
                         android:layout_gravity="center_vertical"
-                        android:textColor="@color/primary"
+                        android:textColor="?attr/colorPrimary"
                         />
 
 
@@ -66,7 +66,7 @@
                     app:layout_constraintLeft_toRightOf="@id/tvSearchBar"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tvSearchBar"
-                    app:tint="@color/grey"
+                    app:tint="?attr/colorOnPrimary"
                     android:contentDescription="@string/settings_icon_in_main_activity" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -75,7 +75,7 @@
                 android:id="@+id/llIconAndTextHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -87,7 +87,7 @@
                     android:id="@+id/ivHeaderWeatherIcon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:tint="@color/grey" />
+                    app:tint="?colorOnPrimary" />
 
                 <TextView
                     android:id="@+id/tvHeaderWeatherDescription"
@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     style="@style/PoppinsMediumExtraLarge"
                     android:layout_marginStart="4dp"
-                    android:textSize="128sp"
+                    android:textSize="96sp"
                     />
 
                 <TextView

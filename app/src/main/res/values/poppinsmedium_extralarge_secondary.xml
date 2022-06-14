@@ -3,6 +3,6 @@
     <style name="PoppinsMediumExtraLarge">
         <item name="fontFamily">@font/poppinsmedium</item>
         <item name="android:textSize">64sp</item>
-        <item name="android:textColor">@color/secondary_white</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
     </style>
 </resources>

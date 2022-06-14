@@ -22,7 +22,7 @@
         android:layout_height="24dp"
         android:layout_gravity="center"
         android:layout_marginTop="4dp"
-        app:tint="@color/black"
+        app:tint="?attr/colorOnSecondary"
         android:contentDescription="@string/icon_image" />
 
     <TextView
@@ -33,7 +33,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         style="@style/PoppinsRegularSmallGrey"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSecondary"
         android:layout_gravity="center"
         />
 
@@ -45,7 +45,7 @@
         android:layout_marginStart="2dp"
         style="@style/PoppinsMedium36LargePrimaryVariant"
         android:textSize="30sp"
-        android:textColor="@color/primaryvariant"
+        android:textColor="?attr/colorPrimaryVariant"
         android:layout_gravity="center"
         />
 

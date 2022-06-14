@@ -3,6 +3,6 @@
     <style name="PoppinsRegularSmallGrey">
         <item name="fontFamily">@font/poppinsregular</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/grey</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 </resources>
