@@ -6,25 +6,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.neupanesushant.weather.R
+import com.neupanesushant.weather.*
 import com.neupanesushant.weather.activity.main.fragment.home.adapter.DailyForecastAdapter
 import com.neupanesushant.weather.activity.main.fragment.home.adapter.HourlyForecastAdapter
 import com.neupanesushant.weather.activity.main.fragment.search.SearchFragment
 import com.neupanesushant.weather.activity.main.fragment.settings.SettingsFragment
-import com.neupanesushant.weather.capitalizeWords
 import com.neupanesushant.weather.databinding.FragmentHomeBinding
-import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 class HomeFragment : Fragment() {
@@ -38,6 +31,10 @@ class HomeFragment : Fragment() {
     private val searchFragment = SearchFragment()
     private val settingFragment = SettingsFragment()
 
+    var locationLatitude : Double = 0.0
+    var locationLongitude : Double = 0.0
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,6 +42,11 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(layoutInflater)
         application = requireNotNull(this.activity).application
         viewModel = ViewModelProvider(this, HomeViewModelFactory(this.application)).get(HomeViewModel::class.java)
+        val bundle = this.arguments
+        if(bundle != null){
+            locationLatitude = bundle!!.getDouble("latitude")
+            locationLongitude = bundle!!.getDouble("longitude")
+        }
         return binding.root
     }
 
@@ -53,6 +55,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        viewModel.getResults(locationLatitude.toString() , locationLongitude.toString())
         binding.apply{
 
             tvSearchBar.setOnClickListener {

@@ -31,11 +31,13 @@ class HomeViewModel(val application : Application) : ViewModel() {
     private val _currentLocationWeather = MutableLiveData<LocationWeather>()
     val currentLocationWeather : LiveData<LocationWeather> get() = _currentLocationWeather
 
-    init{
-        getLocationWeatherFromAPI(currentLocation.latitude.toString(), currentLocation.longitude.toString())
+//    init{
+//        getLocationWeatherFromAPI(currentLocation.latitude.toString(), currentLocation.longitude.toString())
+//    }
 
+    fun getResults(latitude : String, longitude : String ){
+        getLocationWeatherFromAPI(latitude, longitude)
     }
-
     fun getCityName( lat : Double, long : Double) : String {
         val cityName : String
         val geoCoder = Geocoder(application, Locale.getDefault())

@@ -1,10 +1,14 @@
 package com.neupanesushant.weather.activity.main
 
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.animation.AnimationUtils
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import com.neupanesushant.weather.R
 import com.neupanesushant.weather.activity.main.fragment.home.HomeFragment
 import com.neupanesushant.weather.activity.main.fragment.search.SearchFragment
@@ -16,29 +20,26 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
 
     private val homeFragment = HomeFragment();
-    private val settingsFragment = SettingsFragment()
-    private val searchFragment = SearchFragment();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        replaceFragment(homeFragment)
+        val latitude = intent.extras?.get("currentLocationLatitude") as Double
+        val longitude = intent.extras?.get("currentLocationLongitude") as Double
 
+        loadHomeFragment(latitude, longitude)
     }
 
-    fun replaceFragment(fragment: Fragment) {
-        if (fragment != null) {
-            val fragmentTransaction = supportFragmentManager.beginTransaction()
-            val animation = AnimationUtils.loadAnimation(baseContext, androidx.appcompat.R.anim.abc_slide_in_bottom)
-            fragmentTransaction.replace(R.id.fragment_container, fragment)
-            if(fragment != homeFragment){
-                fragmentTransaction.isAddToBackStackAllowed
-                fragmentTransaction.addToBackStack(null)
-            }
-            fragmentTransaction.commit()
-        }
+    fun loadHomeFragment(latitude : Double, longitude : Double){
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putDouble("latitude", latitude)
+        bundle.putDouble("longitude", longitude)
+        homeFragment.arguments = bundle
+        fragmentTransaction.add(R.id.fragment_container, homeFragment).commit()
     }
 
 }

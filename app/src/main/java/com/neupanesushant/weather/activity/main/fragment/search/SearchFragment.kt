@@ -2,29 +2,24 @@ package com.neupanesushant.weather.activity.main.fragment.search
 
 import android.app.Application
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.text.method.KeyListener
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.EditorInfo.*
 import android.view.inputmethod.InputMethodManager
-import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.neupanesushant.weather.activity.main.fragment.home.HomeViewModel
 import com.neupanesushant.weather.activity.main.fragment.search.adapter.SearchResultAdapter
 import com.neupanesushant.weather.databinding.FragmentSearchBinding
-import kotlinx.coroutines.Job
-import java.security.Key
 
 
 class SearchFragment : Fragment() {
@@ -35,6 +30,11 @@ class SearchFragment : Fragment() {
     private lateinit var viewModel : SearchViewModel
     private lateinit var application : Application
 
+
+    val onSearchedResultClick : (Double, Double) -> Unit = {latitude, longitude ->
+//        homeViewModel.getResults(latitude.toString(), longitude.toString())
+        parentFragmentManager.popBackStack()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

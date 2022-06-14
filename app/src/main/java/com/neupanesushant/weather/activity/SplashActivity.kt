@@ -17,10 +17,11 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
 import com.neupanesushant.weather.databinding.ActivitySplashBinding
 import com.neupanesushant.weather.activity.main.MainActivity
-import com.neupanesushant.weather.currentLocation
-import com.neupanesushant.weather.isCurrentLocationSet
+//import com.neupanesushant.weather.currentLocation
+//import com.neupanesushant.weather.isCurrentLocationSet
 import java.util.*
 
+@SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
     private lateinit var fusedLocationProviderClient :FusedLocationProviderClient
@@ -28,6 +29,9 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var handler : Handler
     private lateinit var runnable : Runnable
     private  var openedNextActivity = false
+
+    var isCurrentLocationSet = false
+    lateinit var currentLocation : Location
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -56,6 +60,8 @@ class SplashActivity : AppCompatActivity() {
     }
     fun startNextActivity(){
         val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("currentLocationLatitude", currentLocation.latitude)
+        intent.putExtra("currentLocationLongitude", currentLocation.longitude)
         startActivity(intent)
         finish()
     }
