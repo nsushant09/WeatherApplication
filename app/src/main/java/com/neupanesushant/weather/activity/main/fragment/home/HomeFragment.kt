@@ -19,6 +19,7 @@ import com.neupanesushant.weather.activity.main.fragment.home.adapter.HourlyFore
 import com.neupanesushant.weather.activity.main.fragment.search.SearchFragment
 import com.neupanesushant.weather.activity.main.fragment.settings.SettingsFragment
 import com.neupanesushant.weather.databinding.FragmentHomeBinding
+import com.squareup.picasso.Picasso
 import java.util.*
 
 
@@ -88,6 +89,10 @@ class HomeFragment : Fragment() {
 
                 tvTemperatureMain.text = viewModel.convertKelvinToCelsius(it.current.temp)
                 tvLocationMain.text = setLocationName()
+
+                Picasso.get().load(viewModel.getWeatherImage(currentWeatherObject.icon)).centerCrop().fit().error(viewModel.getWeatherIcon(currentWeatherObject.icon)).into(this.ivCurrentImage)
+                tvPressure.text = it.current.pressure.toInt().toString()
+                tvHumidity.text = it.current.humidity.toInt().toString()
 
                 val hourlyForecastString : String = "Hourly Forecast"
                 tvHourlyForecastTitle.text = hourlyForecastString
