@@ -45,7 +45,6 @@ class HomeViewModel(val application : Application) : ViewModel() {
             cityName = Address.get(0).locality
             return cityName
         }catch (e : NullPointerException){
-            Log.i(TAG,"Null pointer exception")
         }
         return "nullValue"
     }
@@ -111,7 +110,7 @@ class HomeViewModel(val application : Application) : ViewModel() {
     fun getWeatherImage(description : String) : String{
 
         when(description){
-            "01d" -> return "https://cdn.pixabay.com/photo/2016/09/14/20/03/airplane-1670266__340.jpg"
+            "01d" -> return "https://images.unsplash.com/photo-1530530824905-661c2bb787f6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2xlYXIlMjBza3l8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
             "01n" -> return "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8bmlnaHQlMjBubyUyMGNvcHlyaWdodHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
             "02d" -> return "https://images.unsplash.com/photo-1558089858-f49426a78c5a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8OXw5ODc3NDQ0fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
             "02n" -> return "https://images.unsplash.com/photo-1593977379931-ce8b3e44c7dd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bmlnaHQlMjBjbG91ZHN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"

@@ -69,7 +69,6 @@ class SearchViewModel(val application: Application) : ViewModel() {
             cityName = Address.get(0).locality
             return cityName
         }catch (e : NullPointerException){
-            Log.i(TAG,"Null pointer exception")
         }
         return "nullValue"
     }
@@ -93,7 +92,7 @@ class SearchViewModel(val application: Application) : ViewModel() {
                     arrayListOfLocationWeather.add(
                         LocationDetail(
                            if(getCityName(response.body()!!.lat, response.body()!!.lon) == "nullValue" ) cityName.capitalizeWords() else getCityName(response.body()!!.lat, response.body()!!.lon),
-                            address.countryCode,
+                            if(address.countryCode == null) "" else address.countryCode,
                             response.body()!!.lat,
                             response.body()!!.lon,
                             (response.body()!!.current.temp - 273.15).toInt()

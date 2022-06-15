@@ -9,4 +9,12 @@
     <string name="search_results">Search Results</string>
     <string name="no_results_found">No Results Found</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="help">Help</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="rate_our_app">Rate Our App</string>
+    <string name="terms_of_use">Terms of Use</string>
+    <string name="share_our_app">Share Our App</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="settings">Settings</string>
 </resources>
