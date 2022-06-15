@@ -9,12 +9,10 @@
     >
 
 
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="16dp"
-        >
+        android:paddingBottom="16dp">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,30 +26,27 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                >
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:id="@+id/tvSearchBar"
                     android:layout_width="300dp"
                     android:layout_height="36dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintLeft_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="32dp"
                     android:background="@drawable/searchfield_bg"
                     android:paddingHorizontal="16dp"
-                    >
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintLeft_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/search"
-                        android:fontFamily="@font/poppinsregular"
                         android:layout_gravity="center_vertical"
-                        android:textColor="?attr/colorPrimary"
-                        />
+                        android:fontFamily="@font/poppinsregular"
+                        android:text="@string/search"
+                        android:textColor="?attr/colorPrimary" />
 
 
                 </LinearLayout>
@@ -61,13 +56,13 @@
                     android:layout_width="24sp"
                     android:layout_height="24sp"
                     android:layout_gravity="center"
+                    android:contentDescription="@string/settings_icon_in_main_activity"
                     android:src="@drawable/ic_setting_svgrepo_com"
                     app:layout_constraintBottom_toBottomOf="@id/tvSearchBar"
                     app:layout_constraintLeft_toRightOf="@id/tvSearchBar"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tvSearchBar"
-                    app:tint="?attr/colorOnPrimary"
-                    android:contentDescription="@string/settings_icon_in_main_activity" />
+                    app:tint="?attr/colorOnPrimary" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -103,76 +98,69 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:gravity="center"
                 android:orientation="vertical"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/llIconAndTextHeader"
-                android:gravity="center"
-                >
+                app:layout_constraintTop_toBottomOf="@id/llIconAndTextHeader">
 
                 <TextView
                     android:id="@+id/tvTemperatureMain"
+                    style="@style/PoppinsMediumExtraLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/PoppinsMediumExtraLarge"
                     android:layout_marginStart="4dp"
-                    android:textSize="96sp"
-                    />
+                    android:textSize="96sp" />
 
                 <TextView
                     android:id="@+id/tvLocationMain"
+                    style="@style/PoppinsRegularLargeSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-40dp"
-                    style="@style/PoppinsRegularLargeSecondary"
-                    />
+                    android:layout_marginTop="-40dp" />
 
             </LinearLayout>
 
 
             <TextView
                 android:id="@+id/tvHourlyForecastTitle"
+                style="@style/PoppinsRegularMediumSecondary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/llMain"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                style="@style/PoppinsRegularMediumSecondary"
-                />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llMain" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvHourlyForecast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintLeft_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvHourlyForecastTitle"
-                android:layout_marginTop="8dp"
-                />
+                app:layout_constraintTop_toBottomOf="@id/tvHourlyForecastTitle" />
 
             <TextView
                 android:id="@+id/tvDailyForecastTitle"
+                style="@style/PoppinsRegularMediumSecondary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvHourlyForecast"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                style="@style/PoppinsRegularMediumSecondary"
-                />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvHourlyForecast" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvDailyForecast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintLeft_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvDailyForecastTitle"
-                android:layout_marginTop="8dp"
 
                 />
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

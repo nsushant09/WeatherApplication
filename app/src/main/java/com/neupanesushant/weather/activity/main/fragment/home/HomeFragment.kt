@@ -50,7 +50,6 @@ class HomeFragment : Fragment() {
             locationLatitude = bundle!!.getDouble("latitude")
             locationLongitude = bundle!!.getDouble("longitude")
         }
-
         return binding.root
     }
 
