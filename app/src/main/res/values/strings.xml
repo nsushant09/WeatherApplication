@@ -8,4 +8,5 @@
     <string name="icon_image">Icon Image</string>
     <string name="search_results">Search Results</string>
     <string name="no_results_found">No Results Found</string>
+    <string name="dark_mode">Dark Mode</string>
 </resources>

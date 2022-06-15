@@ -1,5 +1,7 @@
 package com.neupanesushant.weather.activity.main
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +9,7 @@ import android.util.Log
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import com.neupanesushant.weather.LocationCoordinates
@@ -28,10 +31,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val sharedPref = getSharedPreferences("isDarkModePref", Context.MODE_PRIVATE)
         val latitude = intent.extras?.get("currentLocationLatitude") as Double
         val longitude = intent.extras?.get("currentLocationLongitude") as Double
-        viewModel = ViewModelProvider(this, MainViewModelFactory(LocationCoordinates(latitude, longitude))).get(MainViewModel::class.java)
-
+        viewModel = ViewModelProvider(this, MainViewModelFactory(LocationCoordinates(latitude, longitude), sharedPref)).get(MainViewModel::class.java)
         loadHomeFragment(latitude, longitude)
     }
 

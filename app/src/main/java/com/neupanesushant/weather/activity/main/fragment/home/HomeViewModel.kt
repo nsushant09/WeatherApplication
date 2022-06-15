@@ -112,21 +112,21 @@ class HomeViewModel(val application : Application) : ViewModel() {
 
         when(description){
             "01d" -> return "https://cdn.pixabay.com/photo/2016/09/14/20/03/airplane-1670266__340.jpg"
-            "01n" -> return "https://cdn.pixabay.com/photo/2018/06/03/21/50/milky-way-3451655__340.jpg"
-            "02d" -> return "https://cdn.pixabay.com/photo/2022/04/07/15/13/farming-7117714__340.jpg"
-            "02n" -> return "https://cdn.pixabay.com/photo/2014/09/17/13/42/mackerel-sky-449475__480.jpg"
+            "01n" -> return "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8bmlnaHQlMjBubyUyMGNvcHlyaWdodHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
+            "02d" -> return "https://images.unsplash.com/photo-1558089858-f49426a78c5a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8OXw5ODc3NDQ0fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+            "02n" -> return "https://images.unsplash.com/photo-1593977379931-ce8b3e44c7dd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bmlnaHQlMjBjbG91ZHN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
             "03d" -> return "https://cdn.pixabay.com/photo/2013/04/09/17/08/sunset-102234__480.jpg"
             "03n" -> return "https://cdn.pixabay.com/photo/2018/05/04/12/43/monolithic-part-of-the-waters-3373906__480.jpg"
-            "04d" -> return "https://cdn.pixabay.com/photo/2014/11/29/18/04/window-550648__480.jpg"
-            "04n" -> return "https://cdn.pixabay.com/photo/2013/07/03/17/49/moon-142977__340.jpg"
+            "04d" -> return "https://images.unsplash.com/photo-1533736405784-798e2e103a3f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YnJva2VuJTIwY2xvdWRzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+            "04n" -> return "https://images.unsplash.com/photo-1558424774-86401550d687?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bmlnaHQlMjBjbG91ZHN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
             "09d" -> return "https://cdn.pixabay.com/photo/2014/04/05/11/39/rain-316579__340.jpg"
             "09n" -> return "https://cdn.pixabay.com/photo/2015/03/11/13/54/rain-668694__480.jpg"
             "10d" -> return "https://cdn.pixabay.com/photo/2014/04/05/11/39/rain-316579__340.jpg"
             "10n" -> return "https://cdn.pixabay.com/photo/2015/03/11/13/54/rain-668694__480.jpg"
             "11d" -> return "https://cdn.pixabay.com/photo/2019/12/22/22/00/lightning-4713379__480.jpg"
             "11n" -> return "https://cdn.pixabay.com/photo/2015/09/23/08/16/thunder-953118__340.jpg"
-            "13d" -> return "https://cdn.pixabay.com/photo/2012/12/13/06/39/snow-69661__480.jpg"
-            "13n" -> return "https://cdn.pixabay.com/photo/2016/10/21/19/49/sunrise-1759047__340.jpg"
+            "13d" -> return "https://images.unsplash.com/photo-1551234250-d88208c2ce14?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHRodW5kZXJzdG9ybXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
+            "13n" -> return "https://images.unsplash.com/photo-1583459094467-e0db130c0dea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8dGh1bmRlcnN0b3JtfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
             else -> return "https://cdn.pixabay.com/photo/2015/11/06/09/53/trees-1025783__340.jpg"
         }
     }
