@@ -3,20 +3,20 @@ package com.neupanesushant.weather.activity.main.fragment.search
 import android.app.Application
 import android.location.Address
 import android.location.Geocoder
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.neupanesushant.weather.WeatherAPI
 import com.neupanesushant.weather.apiserviceclass.LocationWeather
 import com.neupanesushant.weather.capitalizeWords
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.NullPointerException
 import java.util.*
 
 class SearchViewModel(val application: Application) : ViewModel() {
@@ -25,6 +25,9 @@ class SearchViewModel(val application: Application) : ViewModel() {
     private val TAG = "SearchViewModel"
     private val BASE_URL: String = "https://api.openweathermap.org/data/2.5/"
     private val KEY: String = "23c28e4ade04201b9448d391e0cf9832"
+
+    private var viewModelJob = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private val _addressList = MutableLiveData<List<Address>>()
     val addressList: LiveData<List<Address>>
@@ -38,21 +41,26 @@ class SearchViewModel(val application: Application) : ViewModel() {
     private val geocoder = Geocoder(application)
 
     private val _isNoResultFound = MutableLiveData<Boolean>()
-    val isNoResultFound : LiveData<Boolean> get() = _isNoResultFound
+    val isNoResultFound: LiveData<Boolean> get() = _isNoResultFound
 
-    init{
+    init {
         _isNoResultFound.value = false
     }
 
     fun getSearchResult(cityName: String) {
         arrayListOfLocationWeather.clear()
         try {
-            _addressList.value = geocoder.getFromLocationName(cityName, 10)
             if (addressList.value != null && addressList.value?.size != 0) {
+                _addressList.value = geocoder.getFromLocationName(cityName, 10)
                 _addressList.value?.forEach {
-                    getLocationWeatherFromAPI(it.latitude.toString(), it.longitude.toString(), it, cityName)
+                    getLocationWeatherFromAPI(
+                        it.latitude.toString(),
+                        it.longitude.toString(),
+                        it,
+                        cityName
+                    )
                 }
-            }else{
+            } else {
                 _isNoResultFound.value = true
             }
 
@@ -61,19 +69,25 @@ class SearchViewModel(val application: Application) : ViewModel() {
         }
     }
 
+
     fun getCityName(lat: Double, long: Double): String {
         val cityName: String
         val geoCoder = Geocoder(application, Locale.getDefault())
         val Address = geoCoder.getFromLocation(lat, long, 1)
-        try{
+        try {
             cityName = Address.get(0).locality
             return cityName
-        }catch (e : NullPointerException){
+        } catch (e: NullPointerException) {
         }
         return "nullValue"
     }
 
-    fun getLocationWeatherFromAPI(latitude: String, longitude: String, address: Address, cityName : String) {
+    fun getLocationWeatherFromAPI(
+        latitude: String,
+        longitude: String,
+        address: Address,
+        cityName: String
+    ) {
         val retrofit = Retrofit
             .Builder()
             .addConverterFactory(GsonConverterFactory.create())
@@ -91,8 +105,15 @@ class SearchViewModel(val application: Application) : ViewModel() {
                 if (response != null) {
                     arrayListOfLocationWeather.add(
                         LocationDetail(
-                           if(getCityName(response.body()!!.lat, response.body()!!.lon) == "nullValue" ) cityName.capitalizeWords() else getCityName(response.body()!!.lat, response.body()!!.lon),
-                            if(address.countryCode == null) "" else address.countryCode,
+                            if (getCityName(
+                                    response.body()!!.lat,
+                                    response.body()!!.lon
+                                ) == "nullValue"
+                            ) cityName.capitalizeWords() else getCityName(
+                                response.body()!!.lat,
+                                response.body()!!.lon
+                            ),
+                            if (address.countryCode == null) "" else address.countryCode,
                             response.body()!!.lat,
                             response.body()!!.lon,
                             (response.body()!!.current.temp - 273.15).toInt()
@@ -122,4 +143,9 @@ class SearchViewModel(val application: Application) : ViewModel() {
         val longitude: Double,
         val currentTemperature: Int
     )
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
 }
