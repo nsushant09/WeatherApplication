@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/PoppinsMedium16MediumBlack"
-                android:textColor="?attr/colorOnPrimary"
+                android:textColor="@color/dark_grey"
                 android:layout_toEndOf="@id/tvCityName"
                 />
 
@@ -57,6 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/PoppinsRegularSmallGrey"
+                android:textColor="@color/dark_grey"
                 />
 
             <TextView
@@ -65,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 style="@style/PoppinsRegularSmallGrey"
-                android:textColor="?attr/colorOnPrimary"
+                android:textColor="@color/dark_grey"
                 android:layout_toEndOf="@id/tvLatitude"
                 />
 
