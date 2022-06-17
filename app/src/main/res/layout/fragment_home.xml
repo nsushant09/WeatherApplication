@@ -107,6 +107,7 @@
                     android:layout_height="400dp"
                     app:cardCornerRadius="8dp"
                     android:elevation="32dp"
+                    android:backgroundTint="?attr/colorSecondary"
                     >
 
                     <ImageView

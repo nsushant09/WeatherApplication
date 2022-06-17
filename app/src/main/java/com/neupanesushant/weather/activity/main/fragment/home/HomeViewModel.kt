@@ -30,9 +30,6 @@ class HomeViewModel(val application : Application) : ViewModel() {
     private val _currentLocationWeather = MutableLiveData<LocationWeather>()
     val currentLocationWeather : LiveData<LocationWeather> get() = _currentLocationWeather
 
-//    init{
-//        getLocationWeatherFromAPI(currentLocation.latitude.toString(), currentLocation.longitude.toString())
-//    }
 
     fun getResults(latitude : String, longitude : String ){
         getLocationWeatherFromAPI(latitude, longitude)
@@ -40,8 +37,8 @@ class HomeViewModel(val application : Application) : ViewModel() {
     fun getCityName(lat: Double, long: Double): String {
         val cityName: String
         val geoCoder = Geocoder(application, Locale.getDefault())
-        val Address = geoCoder.getFromLocation(lat, long, 1)
         try{
+            val Address = geoCoder.getFromLocation(lat, long, 1)
             cityName = Address.get(0).locality
             return cityName
         }catch (e : NullPointerException){

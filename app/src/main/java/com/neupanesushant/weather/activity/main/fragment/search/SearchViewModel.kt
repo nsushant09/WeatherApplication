@@ -26,9 +26,6 @@ class SearchViewModel(val application: Application) : ViewModel() {
     private val BASE_URL: String = "https://api.openweathermap.org/data/2.5/"
     private val KEY: String = "23c28e4ade04201b9448d391e0cf9832"
 
-    private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
     private val _addressList = MutableLiveData<List<Address>>()
     val addressList: LiveData<List<Address>>
         get() = _addressList
@@ -50,8 +47,8 @@ class SearchViewModel(val application: Application) : ViewModel() {
     fun getSearchResult(cityName: String) {
         arrayListOfLocationWeather.clear()
         try {
+            _addressList.value = geocoder.getFromLocationName(cityName, 10)
             if (addressList.value != null && addressList.value?.size != 0) {
-                _addressList.value = geocoder.getFromLocationName(cityName, 10)
                 _addressList.value?.forEach {
                     getLocationWeatherFromAPI(
                         it.latitude.toString(),
@@ -60,7 +57,8 @@ class SearchViewModel(val application: Application) : ViewModel() {
                         cityName
                     )
                 }
-            } else {
+
+            }else{
                 _isNoResultFound.value = true
             }
 
@@ -146,6 +144,5 @@ class SearchViewModel(val application: Application) : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        viewModelJob.cancel()
     }
 }

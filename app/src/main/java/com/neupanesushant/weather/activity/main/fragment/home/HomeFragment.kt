@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -79,8 +80,8 @@ class HomeFragment : Fragment() {
         viewModel.currentLocationWeather.observe(viewLifecycleOwner, Observer {
             val currentWeatherObject = it.current.weather.get(0)
 
-            val hourlyAdapter = HourlyForecastAdapter(viewModel, it.hourly)
-            val dailyAdapter = DailyForecastAdapter(viewModel, it.daily)
+            val hourlyAdapter = HourlyForecastAdapter(requireContext(), viewModel, it.hourly)
+            val dailyAdapter = DailyForecastAdapter(requireContext(),viewModel, it.daily)
             binding.rvHourlyForecast.adapter = hourlyAdapter
             binding.rvDailyForecast.adapter = dailyAdapter
             binding.apply{
@@ -88,9 +89,12 @@ class HomeFragment : Fragment() {
                 tvHeaderWeatherDescription.text = currentWeatherObject.description.capitalizeWords()
 
                 tvTemperatureMain.text = viewModel.convertKelvinToCelsius(it.current.temp)
+                tvTemperatureMain.animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_left)
                 tvLocationMain.text = setLocationName()
+                tvLocationMain.animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
 
                 Picasso.get().load(viewModel.getWeatherImage(currentWeatherObject.icon)).centerCrop().fit().error(viewModel.getWeatherIcon(currentWeatherObject.icon)).into(this.ivCurrentImage)
+                ivCurrentImage.animation = AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_grow_fade_in_from_bottom)
                 tvPressure.text = it.current.pressure.toInt().toString()
                 tvHumidity.text = it.current.humidity.toInt().toString()
 
