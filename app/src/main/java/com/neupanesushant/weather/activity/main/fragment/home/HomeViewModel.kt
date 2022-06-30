@@ -8,9 +8,12 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.neupanesushant.weather.R
 import com.neupanesushant.weather.WeatherAPI
+import com.neupanesushant.weather.WeatherAPIService
 import com.neupanesushant.weather.apiserviceclass.LocationWeather
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,8 +26,6 @@ import java.util.concurrent.TimeUnit
 
 class HomeViewModel(val application : Application) : ViewModel() {
 
-    private val TAG : String = "HomeViewModel"
-    private val BASE_URL: String = "https://api.openweathermap.org/data/2.5/"
     private val KEY : String = "23c28e4ade04201b9448d391e0cf9832"
 
     private val _currentLocationWeather = MutableLiveData<LocationWeather>()
@@ -56,30 +57,13 @@ class HomeViewModel(val application : Application) : ViewModel() {
 
 
     fun getLocationWeatherFromAPI(latitude : String, longitude : String ){
-        val retrofit = Retrofit
-            .Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_URL)
-            .build()
-            .create(WeatherAPI::class.java)
-
-        val retrofitData = retrofit.getLocationWeather(latitude, longitude, KEY)
-
-        retrofitData.enqueue(object : Callback<LocationWeather>{
-            override fun onResponse(
-                call: Call<LocationWeather>,
-                response: Response<LocationWeather>
-            ) {
-                if(response != null){
-                    _currentLocationWeather.value  = response.body()!!
-                }
-            }
-
-            override fun onFailure(call: Call<LocationWeather>, t: Throwable) {
+        viewModelScope.launch{
+            try{
+                _currentLocationWeather.value = WeatherAPIService.retrofitService.getLocationWeather(latitude, longitude, KEY)
+            }catch(e : Exception){
                 Toast.makeText(application, "Error Occured", Toast.LENGTH_SHORT).show()
             }
-
-        })
+        }
     }
 
     fun getWeatherIcon(description : String) : Int {

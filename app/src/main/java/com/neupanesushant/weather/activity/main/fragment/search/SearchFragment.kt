@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.neupanesushant.weather.activity.main.MainViewModel
 import com.neupanesushant.weather.activity.main.fragment.search.adapter.SearchResultAdapter
 import com.neupanesushant.weather.databinding.FragmentSearchBinding
+import kotlinx.coroutines.coroutineScope
 
 
 class SearchFragment : Fragment() {
@@ -83,6 +84,17 @@ class SearchFragment : Fragment() {
             }
 
         })
+
+//        binding.etSearchBar.addTextChangedListener {
+//            if(it != null && it.length != 0){
+//                binding.apply {
+//                    llSearchResults.visibility = View.GONE
+//                    progressBar.visibility = View.VISIBLE
+//                    tvNoResultFound.visibility = View.GONE
+//                }
+//                viewModel.getSearchResult(it.toString())
+//            }
+//        }
         viewModel.isNoResultFound.observe(viewLifecycleOwner, Observer {
             if(it){
                 binding.tvNoResultFound.visibility = View.VISIBLE

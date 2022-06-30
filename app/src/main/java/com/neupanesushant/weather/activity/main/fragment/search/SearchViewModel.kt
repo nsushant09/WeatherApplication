@@ -6,17 +6,10 @@ import android.location.Geocoder
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.neupanesushant.weather.WeatherAPI
-import com.neupanesushant.weather.apiserviceclass.LocationWeather
+import androidx.lifecycle.viewModelScope
+import com.neupanesushant.weather.WeatherAPIService
 import com.neupanesushant.weather.capitalizeWords
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import kotlinx.coroutines.launch
 import java.util.*
 
 class SearchViewModel(val application: Application) : ViewModel() {
@@ -58,7 +51,7 @@ class SearchViewModel(val application: Application) : ViewModel() {
                     )
                 }
 
-            }else{
+            } else {
                 _isNoResultFound.value = true
             }
 
@@ -86,47 +79,33 @@ class SearchViewModel(val application: Application) : ViewModel() {
         address: Address,
         cityName: String
     ) {
-        val retrofit = Retrofit
-            .Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_URL)
-            .build()
-            .create(WeatherAPI::class.java)
-
-        val retrofitData = retrofit.getLocationWeather(latitude, longitude, KEY)
-
-        retrofitData.enqueue(object : Callback<LocationWeather> {
-            override fun onResponse(
-                call: Call<LocationWeather>,
-                response: Response<LocationWeather>
-            ) {
-                if (response != null) {
-                    arrayListOfLocationWeather.add(
-                        LocationDetail(
-                            if (getCityName(
-                                    response.body()!!.lat,
-                                    response.body()!!.lon
-                                ) == "nullValue"
-                            ) cityName.capitalizeWords() else getCityName(
-                                response.body()!!.lat,
-                                response.body()!!.lon
-                            ),
-                            if (address.countryCode == null) "" else address.countryCode,
-                            response.body()!!.lat,
-                            response.body()!!.lon,
-                            (response.body()!!.current.temp - 273.15).toInt()
-                        )
+        viewModelScope.launch {
+            try {
+                val temp =
+                    WeatherAPIService.retrofitService.getLocationWeather(latitude, longitude, KEY)
+                arrayListOfLocationWeather.add(
+                    LocationDetail(
+                        if (getCityName(
+                                temp.lat,
+                                temp.lon
+                            ) == "nullValue"
+                        ) cityName.capitalizeWords() else getCityName(
+                            temp.lat,
+                            temp.lon
+                        ),
+                        if (address.countryCode == null) "" else address.countryCode,
+                        temp.lat,
+                        temp.lon,
+                        (temp.current.temp - 273.15).toInt()
                     )
-                    _searchedLocationDetailsList.value = arrayListOfLocationWeather
-                    _isNoResultFound.value = false
-                }
-            }
-
-            override fun onFailure(call: Call<LocationWeather>, t: Throwable) {
+                )
+                _searchedLocationDetailsList.value = arrayListOfLocationWeather
+                _isNoResultFound.value = false
+            } catch (e: Exception) {
                 _isNoResultFound.value = true
             }
+        }
 
-        })
     }
 
     fun convertKelvinToCelsius(tempInKelvin: Double): String {
