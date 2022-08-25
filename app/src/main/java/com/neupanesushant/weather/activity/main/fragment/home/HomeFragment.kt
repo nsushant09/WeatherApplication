@@ -21,6 +21,7 @@ import com.neupanesushant.weather.activity.main.fragment.search.SearchFragment
 import com.neupanesushant.weather.activity.main.fragment.settings.SettingsFragment
 import com.neupanesushant.weather.databinding.FragmentHomeBinding
 import com.squareup.picasso.Picasso
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import java.util.*
 
 
@@ -30,7 +31,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding
 
     private lateinit var viewModel : HomeViewModel
-    private lateinit var application : Application
 
     private val searchFragment = SearchFragment()
     private val settingFragment = SettingsFragment()
@@ -45,8 +45,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(layoutInflater)
-        application = requireNotNull(this.activity).application
-        viewModel = ViewModelProvider(this, HomeViewModelFactory(this.application)).get(HomeViewModel::class.java)
+        viewModel = getViewModel()
         val bundle = this.arguments
         if(bundle != null){
             locationLatitude = bundle!!.getDouble("latitude")
@@ -122,7 +121,7 @@ class HomeFragment : Fragment() {
     @SuppressLint("PrivateResource")
     fun replaceFragment(fragment : Fragment){
         val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction.setCustomAnimations(androidx.fragment.R.animator.fragment_fade_enter, androidx.fragment.R.animator.fragment_fade_exit)
+//        fragmentTransaction.setCustomAnimations(androidx.fragment.R.animator.fragment_fade_enter, androidx.fragment.R.animator.fragment_fade_exit)
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.isAddToBackStackAllowed
         fragmentTransaction.addToBackStack(null)

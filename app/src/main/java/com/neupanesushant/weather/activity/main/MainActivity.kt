@@ -31,10 +31,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sharedPref = getSharedPreferences("isDarkModePref", Context.MODE_PRIVATE)
         val latitude = intent.extras?.get("currentLocationLatitude") as Double
         val longitude = intent.extras?.get("currentLocationLongitude") as Double
-        viewModel = ViewModelProvider(this, MainViewModelFactory(LocationCoordinates(latitude, longitude), sharedPref)).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this, MainViewModelFactory(LocationCoordinates(latitude, longitude))).get(MainViewModel::class.java)
         loadHomeFragment(latitude, longitude)
     }
 

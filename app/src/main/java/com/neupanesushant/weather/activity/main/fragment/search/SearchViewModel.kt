@@ -7,16 +7,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.neupanesushant.weather.WeatherAPIService
+import com.neupanesushant.weather.WeatherAPI
 import com.neupanesushant.weather.capitalizeWords
 import kotlinx.coroutines.launch
+import org.koin.core.component.getScopeName
+import org.koin.core.context.GlobalContext.get
+import org.koin.core.qualifier.named
+
 import java.util.*
 
-class SearchViewModel(val application: Application) : ViewModel() {
+class SearchViewModel(val application: Application, val retrofitInstance : WeatherAPI) : ViewModel() {
 
-
-    private val TAG = "SearchViewModel"
-    private val BASE_URL: String = "https://api.openweathermap.org/data/2.5/"
     private val KEY: String = "23c28e4ade04201b9448d391e0cf9832"
 
     private val _addressList = MutableLiveData<List<Address>>()
@@ -82,7 +83,7 @@ class SearchViewModel(val application: Application) : ViewModel() {
         viewModelScope.launch {
             try {
                 val temp =
-                    WeatherAPIService.retrofitService.getLocationWeather(latitude, longitude, KEY)
+                    retrofitInstance.getLocationWeather(latitude, longitude, KEY)
                 arrayListOfLocationWeather.add(
                     LocationDetail(
                         if (getCityName(

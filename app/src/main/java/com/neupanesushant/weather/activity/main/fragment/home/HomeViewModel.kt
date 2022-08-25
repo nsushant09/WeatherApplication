@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.neupanesushant.weather.R
 import com.neupanesushant.weather.WeatherAPI
-import com.neupanesushant.weather.WeatherAPIService
 import com.neupanesushant.weather.apiserviceclass.LocationWeather
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -24,7 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class HomeViewModel(val application : Application) : ViewModel() {
+class HomeViewModel(val application : Application, val retrofitInstance : WeatherAPI) : ViewModel() {
 
     private val KEY : String = "23c28e4ade04201b9448d391e0cf9832"
 
@@ -59,7 +58,7 @@ class HomeViewModel(val application : Application) : ViewModel() {
     fun getLocationWeatherFromAPI(latitude : String, longitude : String ){
         viewModelScope.launch{
             try{
-                _currentLocationWeather.value = WeatherAPIService.retrofitService.getLocationWeather(latitude, longitude, KEY)
+                _currentLocationWeather.value = retrofitInstance.getLocationWeather(latitude, longitude, KEY)
             }catch(e : Exception){
                 Toast.makeText(application, "Error Occured", Toast.LENGTH_SHORT).show()
             }

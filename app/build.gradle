@@ -64,4 +64,9 @@ dependencies {
     //coroutines extensions
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+
+    //koin
+    implementation "io.insert-koin:koin-android:3.2.0"
+    implementation "io.insert-koin:koin-android-compat:3.2.0"
+    implementation "io.insert-koin:koin-androidx-navigation:3.2.0"
 }

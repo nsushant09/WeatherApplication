@@ -152,22 +152,4 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCityName(lat : Double, long: Double) : String{
-        val cityName : String
-        val geoCoder = Geocoder(this, Locale.getDefault())
-        val Address = geoCoder.getFromLocation(lat, long,1)
-        cityName = Address.get(0).locality
-        Log.i(TAG, "$cityName")
-        return cityName
-    }
-
-    private fun getCountryName(lat : Double, long: Double) : String{
-        val countryName : String
-        val geoCoder = Geocoder(this, Locale.getDefault())
-        val Address = geoCoder.getFromLocation(lat, long,1)
-        countryName = Address.get(0).countryName
-        Log.i(TAG, "$countryName")
-        return countryName
-    }
-
 }

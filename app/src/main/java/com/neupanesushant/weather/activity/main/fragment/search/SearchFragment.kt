@@ -22,6 +22,7 @@ import com.neupanesushant.weather.activity.main.MainViewModel
 import com.neupanesushant.weather.activity.main.fragment.search.adapter.SearchResultAdapter
 import com.neupanesushant.weather.databinding.FragmentSearchBinding
 import kotlinx.coroutines.coroutineScope
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
 class SearchFragment : Fragment() {
@@ -30,7 +31,6 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding
 
     private lateinit var viewModel : SearchViewModel
-    private lateinit var application : Application
 
     private val  mainViewModel : MainViewModel by activityViewModels()
 
@@ -45,8 +45,7 @@ class SearchFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentSearchBinding.inflate(layoutInflater)
-        application = requireNotNull(this.activity).application
-        viewModel = ViewModelProvider(this, SearchViewModelFactory(this.application)).get(SearchViewModel::class.java)
+        viewModel = getViewModel()
         setupSearchBar()
         return binding.root
     }
@@ -85,16 +84,6 @@ class SearchFragment : Fragment() {
 
         })
 
-//        binding.etSearchBar.addTextChangedListener {
-//            if(it != null && it.length != 0){
-//                binding.apply {
-//                    llSearchResults.visibility = View.GONE
-//                    progressBar.visibility = View.VISIBLE
-//                    tvNoResultFound.visibility = View.GONE
-//                }
-//                viewModel.getSearchResult(it.toString())
-//            }
-//        }
         viewModel.isNoResultFound.observe(viewLifecycleOwner, Observer {
             if(it){
                 binding.tvNoResultFound.visibility = View.VISIBLE

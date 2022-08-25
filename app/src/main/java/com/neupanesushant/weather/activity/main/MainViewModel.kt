@@ -6,8 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.neupanesushant.weather.LocationCoordinates
 
-class MainViewModel(val latAndLonObj : LocationCoordinates, sharedPreferences : SharedPreferences): ViewModel() {
-    val sharedPrefEditor = sharedPreferences.edit()
+class MainViewModel(val latAndLonObj : LocationCoordinates): ViewModel() {
     private val _locationCoordinates = MutableLiveData<LocationCoordinates>()
     val locationCoordinates : LiveData<LocationCoordinates> get() = _locationCoordinates
 
@@ -18,7 +17,6 @@ class MainViewModel(val latAndLonObj : LocationCoordinates, sharedPreferences : 
     val isDarkMode : LiveData<Boolean> get() = _isDarkMode
     init{
         _locationCoordinates.value = latAndLonObj
-        _isDarkMode.value = sharedPreferences.getBoolean("isDarkModeValue", true)
     }
 
     fun setLocationCoordinates(cityName : String, latitude : Double, longitude : Double){
@@ -28,6 +26,5 @@ class MainViewModel(val latAndLonObj : LocationCoordinates, sharedPreferences : 
 
     fun setDarkMode(boolean : Boolean){
         _isDarkMode.value = boolean
-        sharedPrefEditor.putBoolean("isDarkModelValue", boolean).apply()
     }
 }

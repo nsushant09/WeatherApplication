@@ -10,17 +10,8 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 
-private val BASE_URL: String = "https://api.openweathermap.org/data/2.5/"
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(GsonConverterFactory.create())
-    .baseUrl(BASE_URL)
-    .build()
-
 interface WeatherAPI {
     @GET("onecall")
     suspend fun getLocationWeather( @Query("lat") latitude : String , @Query("lon") longitude : String, @Query("appid") id : String ) : LocationWeather
 }
 
-object WeatherAPIService{
-    val retrofitService : WeatherAPI by lazy{ retrofit.create(WeatherAPI::class.java)}
-}
