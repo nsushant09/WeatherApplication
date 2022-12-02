@@ -12,17 +12,17 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.neupanesushant.weather.R
 import com.neupanesushant.weather.activity.main.MainViewModel
+import com.neupanesushant.weather.activity.main.fragment.home.HomeViewModel
 import com.neupanesushant.weather.activity.main.fragment.search.adapter.SearchResultAdapter
 import com.neupanesushant.weather.databinding.FragmentSearchBinding
-import kotlinx.coroutines.coroutineScope
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class SearchFragment : Fragment() {
@@ -30,7 +30,7 @@ class SearchFragment : Fragment() {
     private lateinit var _binding : FragmentSearchBinding
     private val binding get() = _binding
 
-    private lateinit var viewModel : SearchViewModel
+    private val viewModel : SearchViewModel by inject()
 
     private val  mainViewModel : MainViewModel by activityViewModels()
 
@@ -45,7 +45,6 @@ class SearchFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentSearchBinding.inflate(layoutInflater)
-        viewModel = getViewModel()
         setupSearchBar()
         return binding.root
     }

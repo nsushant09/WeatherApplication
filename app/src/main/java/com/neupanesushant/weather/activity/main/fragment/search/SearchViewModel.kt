@@ -8,11 +8,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.neupanesushant.weather.WeatherAPI
+import com.neupanesushant.weather.activity.main.fragment.home.HomeViewModel
 import com.neupanesushant.weather.capitalizeWords
 import kotlinx.coroutines.launch
-import org.koin.core.component.getScopeName
-import org.koin.core.context.GlobalContext.get
-import org.koin.core.qualifier.named
+
 
 import java.util.*
 

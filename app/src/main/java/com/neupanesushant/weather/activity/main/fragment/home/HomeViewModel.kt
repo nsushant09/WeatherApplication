@@ -30,6 +30,9 @@ class HomeViewModel(val application : Application, val retrofitInstance : Weathe
     private val _currentLocationWeather = MutableLiveData<LocationWeather>()
     val currentLocationWeather : LiveData<LocationWeather> get() = _currentLocationWeather
 
+    private val _isLocationWeatherLoading = MutableLiveData<Boolean>()
+    val isLocationWeatherLoading : LiveData<Boolean> get() = _isLocationWeatherLoading
+
 
     fun getResults(latitude : String, longitude : String ){
         getLocationWeatherFromAPI(latitude, longitude)
@@ -56,11 +59,14 @@ class HomeViewModel(val application : Application, val retrofitInstance : Weathe
 
 
     fun getLocationWeatherFromAPI(latitude : String, longitude : String ){
+        _isLocationWeatherLoading.value = true
         viewModelScope.launch{
             try{
                 _currentLocationWeather.value = retrofitInstance.getLocationWeather(latitude, longitude, KEY)
+                _isLocationWeatherLoading.value = false
             }catch(e : Exception){
                 Toast.makeText(application, "Error Occured", Toast.LENGTH_SHORT).show()
+                _isLocationWeatherLoading.value = false
             }
         }
     }

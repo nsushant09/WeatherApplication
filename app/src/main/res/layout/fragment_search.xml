@@ -52,13 +52,14 @@
             android:textCursorDrawable="?attr/colorSecondary"
             android:textSize="12sp"
             android:transitionName="etSearchBarTransition"
+
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.65"
-
             app:layout_constraintLeft_toRightOf="@id/ivHomeBtn"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"
+        />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -75,12 +76,13 @@
         android:id="@+id/tvNoResultFound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="@string/no_results_found"
         style="@style/PoppinsRegularSmallGrey"
-        android:textSize="16sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         android:textColor="?colorSecondary"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="16dp"
         />
 
     <LinearLayout

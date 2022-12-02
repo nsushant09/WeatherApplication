@@ -1,7 +1,6 @@
 package com.neupanesushant.weather.activity.main.fragment.home
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,18 +9,19 @@ import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.neupanesushant.weather.*
+import com.neupanesushant.weather.R
 import com.neupanesushant.weather.activity.main.MainViewModel
 import com.neupanesushant.weather.activity.main.fragment.home.adapter.DailyForecastAdapter
 import com.neupanesushant.weather.activity.main.fragment.home.adapter.HourlyForecastAdapter
 import com.neupanesushant.weather.activity.main.fragment.search.SearchFragment
 import com.neupanesushant.weather.activity.main.fragment.settings.SettingsFragment
+import com.neupanesushant.weather.capitalizeWords
 import com.neupanesushant.weather.databinding.FragmentHomeBinding
 import com.squareup.picasso.Picasso
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
 
 
@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
     private lateinit var _binding : FragmentHomeBinding
     private val binding get() = _binding
 
-    private lateinit var viewModel : HomeViewModel
+    private val viewModel : HomeViewModel by inject()
 
     private val searchFragment = SearchFragment()
     private val settingFragment = SettingsFragment()
@@ -45,7 +45,11 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(layoutInflater)
-        viewModel = getViewModel()
+
+        mainViewModel.locationCoordinates.observe(viewLifecycleOwner) {
+            viewModel.getResults(it.latitude.toString(), it.longitude.toString())
+        }
+
         val bundle = this.arguments
         if(bundle != null){
             locationLatitude = bundle!!.getDouble("latitude")
@@ -57,10 +61,6 @@ class HomeFragment : Fragment() {
     @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        mainViewModel.locationCoordinates.observe(viewLifecycleOwner, {
-            viewModel.getResults(it.latitude.toString(), it.longitude.toString())
-        })
 
         binding.apply{
 
@@ -76,6 +76,15 @@ class HomeFragment : Fragment() {
         binding.rvHourlyForecast.layoutManager = GridLayoutManager(context, 1, LinearLayoutManager.HORIZONTAL, false)
         binding.rvDailyForecast.layoutManager = GridLayoutManager(context, 1, LinearLayoutManager.HORIZONTAL, false)
 
+
+        viewModel.isLocationWeatherLoading.observe(viewLifecycleOwner, Observer{
+            if(it){
+                binding.root.visibility = View.INVISIBLE
+            }else{
+                binding.root.visibility = View.VISIBLE
+            }
+        })
+
         viewModel.currentLocationWeather.observe(viewLifecycleOwner, Observer {
             val currentWeatherObject = it.current.weather.get(0)
 
@@ -88,12 +97,12 @@ class HomeFragment : Fragment() {
                 tvHeaderWeatherDescription.text = currentWeatherObject.description.capitalizeWords()
 
                 tvTemperatureMain.text = viewModel.convertKelvinToCelsius(it.current.temp)
-                tvTemperatureMain.animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_left)
+                tvTemperatureMain.animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
                 tvLocationMain.text = setLocationName()
                 tvLocationMain.animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
 
                 Picasso.get().load(viewModel.getWeatherImage(currentWeatherObject.icon)).centerCrop().fit().error(viewModel.getWeatherIcon(currentWeatherObject.icon)).into(this.ivCurrentImage)
-                ivCurrentImage.animation = AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_grow_fade_in_from_bottom)
+                ivCurrentImage.animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
                 tvPressure.text = it.current.pressure.toInt().toString()
                 tvHumidity.text = it.current.humidity.toInt().toString()
 
