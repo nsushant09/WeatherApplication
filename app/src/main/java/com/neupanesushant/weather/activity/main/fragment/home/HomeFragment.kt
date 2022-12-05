@@ -1,6 +1,7 @@
 package com.neupanesushant.weather.activity.main.fragment.home
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +32,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding
 
     private val viewModel : HomeViewModel by inject()
+    private val sharedPreferences : SharedPreferences by inject()
 
     private val searchFragment = SearchFragment()
     private val settingFragment = SettingsFragment()
