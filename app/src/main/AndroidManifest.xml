@@ -21,6 +21,7 @@
 
         <activity
             android:name="com.neupanesushant.weather.activity.main.MainActivity"
+            android:configChanges="uiMode"
             android:exported="false" />
         <activity
             android:name=".activity.SplashActivity"

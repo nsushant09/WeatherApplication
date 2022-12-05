@@ -4,6 +4,7 @@ import android.app.UiModeManager.MODE_NIGHT_NO
 import android.app.UiModeManager.MODE_NIGHT_YES
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
 
-    private lateinit var viewModel : MainViewModel
+    private val viewModel : MainViewModel by viewModels()
     private val homeFragment = HomeFragment();
     private val sharedPreferences : SharedPreferences by inject()
 
@@ -36,12 +37,25 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.isDarkMode.observe(this){
+            changeTheme()
+        }
         val latitude = intent.extras?.get("currentLocationLatitude") as Double
         val longitude = intent.extras?.get("currentLocationLongitude") as Double
-        viewModel = ViewModelProvider(this, MainViewModelFactory(LocationCoordinates(latitude, longitude))).get(MainViewModel::class.java)
-        loadHomeFragment(latitude, longitude)
+        loadHomeFragment(latitude,longitude)
     }
 
+    fun changeTheme(){
+        if(Configuration().isNightModeActive){
+            if(!sharedPreferences.getBoolean("DARK_MODE_ON", false)){
+                delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
+            }
+        }else{
+            if(sharedPreferences.getBoolean("DARK_MODE_ON", false)){
+                delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
+            }
+        }
+    }
     fun loadHomeFragment(latitude : Double, longitude : Double){
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
@@ -51,5 +65,6 @@ class MainActivity : AppCompatActivity() {
         homeFragment.arguments = bundle
         fragmentTransaction.add(R.id.fragment_container, homeFragment).commit()
     }
+
 
 }

@@ -3,6 +3,7 @@ package com.neupanesushant.weather.activity.main.fragment.settings
 import android.app.UiModeManager
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
 import android.text.method.TextKeyListener.clear
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import com.neupanesushant.weather.R
 import com.neupanesushant.weather.activity.main.MainViewModel
 import com.neupanesushant.weather.databinding.FragmentSettingsBinding
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class SettingsFragment : Fragment() {
@@ -26,8 +28,8 @@ class SettingsFragment : Fragment() {
     private lateinit var _binding: FragmentSettingsBinding
     private val binding get() = _binding
 
-    private val mainViewModel: MainViewModel by activityViewModels()
     private val sharedPreferences : SharedPreferences by inject()
+    private val mainViewModel : MainViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,15 +52,16 @@ class SettingsFragment : Fragment() {
                 .putBoolean("DARK_MODE_ON", isChecked)
                 .apply()
 
-            if(sharedPreferences.getBoolean("DARK_MODE_ON", false)){
-                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-            }else{
-                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
-            }
         }
         binding.btnBack.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mainViewModel.setDarkMode(sharedPreferences.getBoolean("DARK_MODE_ON", false))
+    }
+
 
 }

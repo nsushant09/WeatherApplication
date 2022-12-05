@@ -3,6 +3,7 @@ package com.neupanesushant.weather
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import com.neupanesushant.weather.activity.main.MainViewModel
 import com.neupanesushant.weather.activity.main.fragment.home.HomeViewModel
 import com.neupanesushant.weather.activity.main.fragment.search.SearchViewModel
 import org.koin.android.ext.koin.androidApplication
@@ -34,5 +35,9 @@ fun appModule() = module {
     }
     viewModel{
         SearchViewModel(application = androidApplication(), get(named("retrofitInstance")))
+    }
+
+    viewModel{
+        MainViewModel()
     }
 }

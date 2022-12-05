@@ -2,6 +2,7 @@ package com.neupanesushant.weather.activity.main.fragment.home
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.neupanesushant.weather.LocationCoordinates
 import com.neupanesushant.weather.R
 import com.neupanesushant.weather.activity.main.MainViewModel
 import com.neupanesushant.weather.activity.main.fragment.home.adapter.DailyForecastAdapter
@@ -56,6 +58,7 @@ class HomeFragment : Fragment() {
         if(bundle != null){
             locationLatitude = bundle!!.getDouble("latitude")
             locationLongitude = bundle!!.getDouble("longitude")
+            mainViewModel.setLocationCoordinates(LocationCoordinates( locationLatitude, locationLongitude))
         }
         return binding.root
     }
