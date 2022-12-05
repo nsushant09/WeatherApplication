@@ -42,27 +42,28 @@ class MainActivity : AppCompatActivity() {
         }
         val latitude = intent.extras?.get("currentLocationLatitude") as Double
         val longitude = intent.extras?.get("currentLocationLongitude") as Double
+        viewModel.setLocationCoordinates(LocationCoordinates(latitude,longitude))
         loadHomeFragment(latitude,longitude)
     }
 
     fun changeTheme(){
-        if(Configuration().isNightModeActive){
-            if(!sharedPreferences.getBoolean("DARK_MODE_ON", false)){
-                delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
+        val currentNightMode = this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        when(currentNightMode){
+            Configuration.UI_MODE_NIGHT_NO ->{
+                if(sharedPreferences.getBoolean("DARK_MODE_ON", false)){
+                    delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
+                }
             }
-        }else{
-            if(sharedPreferences.getBoolean("DARK_MODE_ON", false)){
-                delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
+            Configuration.UI_MODE_NIGHT_YES ->{
+                if(!sharedPreferences.getBoolean("DARK_MODE_ON", false)){
+                    delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
+                }
             }
         }
     }
     fun loadHomeFragment(latitude : Double, longitude : Double){
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        val bundle = Bundle()
-        bundle.putDouble("latitude", latitude)
-        bundle.putDouble("longitude", longitude)
-        homeFragment.arguments = bundle
         fragmentTransaction.add(R.id.fragment_container, homeFragment).commit()
     }
 

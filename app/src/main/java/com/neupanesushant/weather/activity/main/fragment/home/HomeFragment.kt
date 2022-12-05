@@ -20,6 +20,7 @@ import com.neupanesushant.weather.activity.main.fragment.home.adapter.DailyForec
 import com.neupanesushant.weather.activity.main.fragment.home.adapter.HourlyForecastAdapter
 import com.neupanesushant.weather.activity.main.fragment.search.SearchFragment
 import com.neupanesushant.weather.activity.main.fragment.settings.SettingsFragment
+import com.neupanesushant.weather.apiserviceclass.LocationWeather
 import com.neupanesushant.weather.capitalizeWords
 import com.neupanesushant.weather.databinding.FragmentHomeBinding
 import com.squareup.picasso.Picasso
@@ -34,13 +35,9 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding
 
     private val viewModel : HomeViewModel by inject()
-    private val sharedPreferences : SharedPreferences by inject()
 
     private val searchFragment = SearchFragment()
     private val settingFragment = SettingsFragment()
-
-    var locationLatitude : Double = 0.0
-    var locationLongitude : Double = 0.0
 
     private val  mainViewModel : MainViewModel by activityViewModels()
 
@@ -54,12 +51,6 @@ class HomeFragment : Fragment() {
             viewModel.getResults(it.latitude.toString(), it.longitude.toString())
         }
 
-        val bundle = this.arguments
-        if(bundle != null){
-            locationLatitude = bundle!!.getDouble("latitude")
-            locationLongitude = bundle!!.getDouble("longitude")
-            mainViewModel.setLocationCoordinates(LocationCoordinates( locationLatitude, locationLongitude))
-        }
         return binding.root
     }
 
@@ -91,36 +82,39 @@ class HomeFragment : Fragment() {
         })
 
         viewModel.currentLocationWeather.observe(viewLifecycleOwner, Observer {
-            val currentWeatherObject = it.current.weather.get(0)
-
-            val hourlyAdapter = HourlyForecastAdapter(requireContext(), viewModel, it.hourly)
-            val dailyAdapter = DailyForecastAdapter(requireContext(),viewModel, it.daily)
-            binding.rvHourlyForecast.adapter = hourlyAdapter
-            binding.rvDailyForecast.adapter = dailyAdapter
-            binding.apply{
-                ivHeaderWeatherIcon.setImageResource(viewModel.getWeatherIcon(currentWeatherObject.icon))
-                tvHeaderWeatherDescription.text = currentWeatherObject.description.capitalizeWords()
-
-                tvTemperatureMain.text = viewModel.convertKelvinToCelsius(it.current.temp)
-                tvTemperatureMain.animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
-                tvLocationMain.text = setLocationName()
-                tvLocationMain.animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
-
-                Picasso.get().load(viewModel.getWeatherImage(currentWeatherObject.icon)).centerCrop().fit().error(viewModel.getWeatherIcon(currentWeatherObject.icon)).into(this.ivCurrentImage)
-                ivCurrentImage.animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
-                tvPressure.text = it.current.pressure.toInt().toString()
-                tvHumidity.text = it.current.humidity.toInt().toString()
-
-                val hourlyForecastString : String = "Hourly Forecast"
-                tvHourlyForecastTitle.text = hourlyForecastString
-
-                val dailyForecastString : String = "Daily Forecast"
-                tvDailyForecastTitle.text = dailyForecastString
-
-            }
-
+            setData(it)
         })
 
+    }
+
+    fun setData(it : LocationWeather){
+        val currentWeatherObject = it.current.weather.get(0)
+
+        val hourlyAdapter = HourlyForecastAdapter(requireContext(), viewModel, it.hourly)
+        val dailyAdapter = DailyForecastAdapter(requireContext(),viewModel, it.daily)
+        binding.rvHourlyForecast.adapter = hourlyAdapter
+        binding.rvDailyForecast.adapter = dailyAdapter
+        binding.apply{
+            ivHeaderWeatherIcon.setImageResource(viewModel.getWeatherIcon(currentWeatherObject.icon))
+            tvHeaderWeatherDescription.text = currentWeatherObject.description.capitalizeWords()
+
+            tvTemperatureMain.text = viewModel.convertKelvinToCelsius(it.current.temp)
+            tvTemperatureMain.animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
+            tvLocationMain.text = setLocationName()
+            tvLocationMain.animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
+
+            Picasso.get().load(viewModel.getWeatherImage(currentWeatherObject.icon)).centerCrop().fit().error(viewModel.getWeatherIcon(currentWeatherObject.icon)).into(this.ivCurrentImage)
+            ivCurrentImage.animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
+            tvPressure.text = it.current.pressure.toInt().toString()
+            tvHumidity.text = it.current.humidity.toInt().toString()
+
+            val hourlyForecastString : String = "Hourly Forecast"
+            tvHourlyForecastTitle.text = hourlyForecastString
+
+            val dailyForecastString : String = "Daily Forecast"
+            tvDailyForecastTitle.text = dailyForecastString
+
+        }
     }
 
     fun setLocationName() : String{
@@ -140,6 +134,10 @@ class HomeFragment : Fragment() {
         fragmentTransaction.isAddToBackStackAllowed
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
 }
