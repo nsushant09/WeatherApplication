@@ -52,16 +52,12 @@ class SettingsFragment : Fragment() {
                 .putBoolean("DARK_MODE_ON", isChecked)
                 .apply()
 
+            mainViewModel.setDarkMode(sharedPreferences.getBoolean("DARK_MODE_ON", false))
+
         }
         binding.btnBack.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mainViewModel.setDarkMode(sharedPreferences.getBoolean("DARK_MODE_ON", false))
-    }
-
-
+    
 }
