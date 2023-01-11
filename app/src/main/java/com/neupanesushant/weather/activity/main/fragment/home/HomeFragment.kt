@@ -1,8 +1,6 @@
 package com.neupanesushant.weather.activity.main.fragment.home
 
 import android.annotation.SuppressLint
-import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +8,8 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.neupanesushant.weather.LocationCoordinates
 import com.neupanesushant.weather.R
 import com.neupanesushant.weather.activity.main.MainViewModel
 import com.neupanesushant.weather.activity.main.fragment.home.adapter.DailyForecastAdapter
@@ -25,8 +21,6 @@ import com.neupanesushant.weather.capitalizeWords
 import com.neupanesushant.weather.databinding.FragmentHomeBinding
 import com.squareup.picasso.Picasso
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import java.util.*
 
 
 class HomeFragment : Fragment() {
@@ -44,7 +38,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(layoutInflater)
 
         mainViewModel.locationCoordinates.observe(viewLifecycleOwner) {
@@ -73,22 +67,22 @@ class HomeFragment : Fragment() {
         binding.rvDailyForecast.layoutManager = GridLayoutManager(context, 1, LinearLayoutManager.HORIZONTAL, false)
 
 
-        viewModel.isLocationWeatherLoading.observe(viewLifecycleOwner, Observer{
-            if(it){
+        viewModel.isLocationWeatherLoading.observe(viewLifecycleOwner) {
+            if (it) {
                 binding.root.visibility = View.INVISIBLE
-            }else{
+            } else {
                 binding.root.visibility = View.VISIBLE
             }
-        })
+        }
 
-        viewModel.currentLocationWeather.observe(viewLifecycleOwner, Observer {
+        viewModel.currentLocationWeather.observe(viewLifecycleOwner) {
             setData(it)
-        })
+        }
 
     }
 
-    fun setData(it : LocationWeather){
-        val currentWeatherObject = it.current.weather.get(0)
+    private fun setData(it : LocationWeather){
+        val currentWeatherObject = it.current.weather[0]
 
         val hourlyAdapter = HourlyForecastAdapter(requireContext(), viewModel, it.hourly)
         val dailyAdapter = DailyForecastAdapter(requireContext(),viewModel, it.daily)
@@ -108,36 +102,30 @@ class HomeFragment : Fragment() {
             tvPressure.text = it.current.pressure.toInt().toString()
             tvHumidity.text = it.current.humidity.toInt().toString()
 
-            val hourlyForecastString : String = "Hourly Forecast"
+            val hourlyForecastString = "Hourly Forecast"
             tvHourlyForecastTitle.text = hourlyForecastString
 
-            val dailyForecastString : String = "Daily Forecast"
+            val dailyForecastString = "Daily Forecast"
             tvDailyForecastTitle.text = dailyForecastString
 
         }
     }
 
-    fun setLocationName() : String{
-        if(!viewModel.getCityName(viewModel.currentLocationWeather.value?.lat!!, viewModel.currentLocationWeather.value?.lon!!).equals("nullValue", true)){
-            return viewModel.getCityName(viewModel.currentLocationWeather.value?.lat!!, viewModel.currentLocationWeather.value?.lon!!)
+    private fun setLocationName() : String{
+        return if(!viewModel.getCityName(viewModel.currentLocationWeather.value?.lat!!, viewModel.currentLocationWeather.value?.lon!!).equals("nullValue", true)){
+            viewModel.getCityName(viewModel.currentLocationWeather.value?.lat!!, viewModel.currentLocationWeather.value?.lon!!)
         }else if(mainViewModel.locationName.value != null){
-            return mainViewModel.locationName.value!!
+            mainViewModel.locationName.value!!
         }else{
-            return "Unknown"
+            "Unknown"
         }
     }
-    @SuppressLint("PrivateResource")
-    fun replaceFragment(fragment : Fragment){
+    private fun replaceFragment(fragment : Fragment){
         val fragmentTransaction = parentFragmentManager.beginTransaction()
-//        fragmentTransaction.setCustomAnimations(androidx.fragment.R.animator.fragment_fade_enter, androidx.fragment.R.animator.fragment_fade_exit)
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.isAddToBackStackAllowed
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
 }

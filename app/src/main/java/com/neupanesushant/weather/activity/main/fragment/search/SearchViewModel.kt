@@ -1,5 +1,6 @@
 package com.neupanesushant.weather.activity.main.fragment.search
 
+
 import android.app.Application
 import android.location.Address
 import android.location.Geocoder
@@ -8,19 +9,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.neupanesushant.weather.WeatherAPI
-import com.neupanesushant.weather.activity.main.fragment.home.HomeViewModel
 import com.neupanesushant.weather.capitalizeWords
 import kotlinx.coroutines.launch
-
-
 import java.util.*
 
-class SearchViewModel(val application: Application, val retrofitInstance : WeatherAPI) : ViewModel() {
+class SearchViewModel(val application: Application, private val retrofitInstance : WeatherAPI) : ViewModel() {
 
     private val KEY: String = "23c28e4ade04201b9448d391e0cf9832"
 
     private val _addressList = MutableLiveData<List<Address>>()
-    val addressList: LiveData<List<Address>>
+    private val addressList: LiveData<List<Address>>
         get() = _addressList
 
     private val arrayListOfLocationWeather = ArrayList<LocationDetail>()
@@ -61,19 +59,19 @@ class SearchViewModel(val application: Application, val retrofitInstance : Weath
     }
 
 
-    fun getCityName(lat: Double, long: Double): String {
+    private fun getCityName(lat: Double, long: Double): String {
         val cityName: String
         val geoCoder = Geocoder(application, Locale.getDefault())
-        val Address = geoCoder.getFromLocation(lat, long, 1)
+        val address = geoCoder.getFromLocation(lat, long, 1)
         try {
-            cityName = Address.get(0).locality
+            cityName = address[0].locality
             return cityName
         } catch (e: NullPointerException) {
         }
         return "nullValue"
     }
 
-    fun getLocationWeatherFromAPI(
+    private fun getLocationWeatherFromAPI(
         latitude: String,
         longitude: String,
         address: Address,
@@ -108,10 +106,6 @@ class SearchViewModel(val application: Application, val retrofitInstance : Weath
 
     }
 
-    fun convertKelvinToCelsius(tempInKelvin: Double): String {
-        return String.format("%02.1f°", tempInKelvin - 273.15)
-    }
-
 
     data class LocationDetail(
         val name: String,
@@ -121,7 +115,4 @@ class SearchViewModel(val application: Application, val retrofitInstance : Weath
         val currentTemperature: Int
     )
 
-    override fun onCleared() {
-        super.onCleared()
-    }
 }

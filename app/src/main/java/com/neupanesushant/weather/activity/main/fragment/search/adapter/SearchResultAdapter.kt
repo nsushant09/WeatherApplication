@@ -1,15 +1,13 @@
 package com.neupanesushant.weather.activity.main.fragment.search.adapter
 
 import android.annotation.SuppressLint
-import android.location.Address
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.neupanesushant.weather.activity.main.fragment.search.SearchViewModel
-import com.neupanesushant.weather.apiserviceclass.LocationWeather
 import com.neupanesushant.weather.databinding.SearchresultRecyclerviewLayoutBinding
 
-class SearchResultAdapter(val viewModel: SearchViewModel, val list: List<SearchViewModel.LocationDetail>, val onSearchResultClick: (String, Double, Double) -> Unit) : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
+class SearchResultAdapter(val viewModel: SearchViewModel, private val list: List<SearchViewModel.LocationDetail>, val onSearchResultClick: (String, Double, Double) -> Unit) : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
 
     inner class ViewHolder(binding : SearchresultRecyclerviewLayoutBinding) : RecyclerView.ViewHolder(binding.root){
         val cityName = binding.tvCityName
@@ -27,7 +25,7 @@ class SearchResultAdapter(val viewModel: SearchViewModel, val list: List<SearchV
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentObject = list.get(position)
+        val currentObject = list[position]
         holder.cityName.text = currentObject.name
         holder.countryName.text = ", ${currentObject.countryName}"
         holder.latitude.text = String.format("Lat : %02.2f", currentObject.latitude)

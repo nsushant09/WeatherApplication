@@ -1,6 +1,5 @@
 package com.neupanesushant.weather
 
-import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.neupanesushant.weather.activity.main.MainViewModel

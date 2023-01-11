@@ -1,29 +1,25 @@
 package com.neupanesushant.weather.activity
 
+//import com.neupanesushant.weather.currentLocation
+//import com.neupanesushant.weather.isCurrentLocationSet
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
-import com.neupanesushant.weather.databinding.ActivitySplashBinding
 import com.neupanesushant.weather.activity.main.MainActivity
-//import com.neupanesushant.weather.currentLocation
-//import com.neupanesushant.weather.isCurrentLocationSet
-import java.util.*
+import com.neupanesushant.weather.databinding.ActivitySplashBinding
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
-    private val TAG = "MainActivity"
     private lateinit var fusedLocationProviderClient :FusedLocationProviderClient
     private lateinit var binding : ActivitySplashBinding
     private lateinit var handler : Handler
@@ -139,7 +135,7 @@ class SplashActivity : AppCompatActivity() {
         locationrequest .fastestInterval = 0
         locationrequest.numUpdates = 2
         Looper.myLooper()?.let {
-            fusedLocationProviderClient!!.requestLocationUpdates(
+            fusedLocationProviderClient.requestLocationUpdates(
                 locationrequest,locationCallback, it
             )
         }

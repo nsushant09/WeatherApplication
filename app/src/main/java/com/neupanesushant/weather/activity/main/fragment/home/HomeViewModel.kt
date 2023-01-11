@@ -2,8 +2,6 @@ package com.neupanesushant.weather.activity.main.fragment.home
 
 import android.app.Application
 import android.location.Geocoder
-import android.util.Log
-import android.util.TimeUtils
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,17 +11,10 @@ import com.neupanesushant.weather.R
 import com.neupanesushant.weather.WeatherAPI
 import com.neupanesushant.weather.apiserviceclass.LocationWeather
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.NullPointerException
-import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class HomeViewModel(val application : Application, val retrofitInstance : WeatherAPI) : ViewModel() {
+class HomeViewModel(val application : Application, private val retrofitInstance : WeatherAPI) : ViewModel() {
 
     private val KEY : String = "23c28e4ade04201b9448d391e0cf9832"
 
@@ -41,24 +32,16 @@ class HomeViewModel(val application : Application, val retrofitInstance : Weathe
         val cityName: String
         val geoCoder = Geocoder(application, Locale.getDefault())
         try{
-            val Address = geoCoder.getFromLocation(lat, long, 1)
-            cityName = Address.get(0).locality
+            val address = geoCoder.getFromLocation(lat, long, 1)
+            cityName = address[0].locality
             return cityName
         }catch (e : NullPointerException){
         }
         return "nullValue"
     }
 
-    fun getCountryName( lat : Double , long : Double ) : String{
-        val countryName : String
-        val geoCoder = Geocoder(application, Locale.getDefault())
-        val Address = geoCoder.getFromLocation(lat, long,1)
-        countryName = Address.get(0).countryName
-        return countryName
-    }
 
-
-    fun getLocationWeatherFromAPI(latitude : String, longitude : String ){
+    private fun getLocationWeatherFromAPI(latitude : String, longitude : String ){
         _isLocationWeatherLoading.value = true
         viewModelScope.launch{
             try{
@@ -121,28 +104,27 @@ class HomeViewModel(val application : Application, val retrofitInstance : Weathe
         return String.format("%02.1f°", tempInKelvin - 273.15)
     }
 
-    fun convertTimeToLocalTime(time: Long, offset: Long) : String{
+    fun convertTimeToLocalTime(time: Long, offset: Long): String {
         val finalTime = time + offset
         val hours = TimeUnit.SECONDS.toHours(finalTime) % 24
         val minutes = TimeUnit.SECONDS.toMinutes(finalTime) % 60
 
-        val timeString = String.format("%02d:%02d", hours, minutes)
-        return timeString
+        return String.format("%02d:%02d", hours, minutes)
 
     }
 
     fun convertTimeToDay(time : Long) : String{
         var day : Int = TimeUnit.SECONDS.toDays(time).toInt()
         day %= 7
-        when(day){
-            1 -> return "Saturday"
-            2 -> return "Sunday"
-            3 -> return "Monday"
-            4 -> return "Tuesday"
-            5 -> return "Wednesday"
-            6 -> return "Thursday"
-            0 -> return "Friday"
-            else -> return "Error"
+        return when(day){
+            1 -> "Saturday"
+            2 -> "Sunday"
+            3 -> "Monday"
+            4 -> "Tuesday"
+            5 -> "Wednesday"
+            6 -> "Thursday"
+            0 -> "Friday"
+            else -> "Error"
         }
     }
 }

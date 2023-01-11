@@ -1,28 +1,21 @@
 package com.neupanesushant.weather.activity.main.fragment.search
 
-import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo.*
+import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
+import android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.neupanesushant.weather.R
 import com.neupanesushant.weather.activity.main.MainViewModel
-import com.neupanesushant.weather.activity.main.fragment.home.HomeViewModel
 import com.neupanesushant.weather.activity.main.fragment.search.adapter.SearchResultAdapter
 import com.neupanesushant.weather.databinding.FragmentSearchBinding
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class SearchFragment : Fragment() {
@@ -34,7 +27,7 @@ class SearchFragment : Fragment() {
 
     private val  mainViewModel : MainViewModel by activityViewModels()
 
-    val onSearchedResultClick : (String, Double, Double) -> Unit = {cityName, latitude, longitude ->
+    private val onSearchedResultClick : (String, Double, Double) -> Unit = { cityName, latitude, longitude ->
         mainViewModel.setLocationCoordinates(cityName,latitude, longitude)
         parentFragmentManager.popBackStack()
     }
@@ -42,7 +35,7 @@ class SearchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentSearchBinding.inflate(layoutInflater)
         setupSearchBar()
@@ -64,52 +57,49 @@ class SearchFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
 
-        binding.etSearchBar.setOnEditorActionListener(object : TextView.OnEditorActionListener{
-            override fun onEditorAction(p0: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
-                if(actionId == IME_ACTION_SEARCH || actionId == IME_ACTION_DONE){
-                    binding.etSearchBar.text.apply{
-                        if(this != null && this.length != 0){
-                            binding.apply {
-                                llSearchResults.visibility = View.GONE
-                                progressBar.visibility = View.VISIBLE
-                                tvNoResultFound.visibility = View.GONE
-                            }
-                            viewModel.getSearchResult(this.toString())
+        binding.etSearchBar.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == IME_ACTION_SEARCH || actionId == IME_ACTION_DONE) {
+                binding.etSearchBar.text.apply {
+                    if (this != null && this.isNotEmpty()) {
+                        binding.apply {
+                            llSearchResults.visibility = View.GONE
+                            progressBar.visibility = View.VISIBLE
+                            tvNoResultFound.visibility = View.GONE
                         }
+                        viewModel.getSearchResult(this.toString())
                     }
                 }
-                return false
             }
+            false
+        }
 
-        })
-
-        viewModel.isNoResultFound.observe(viewLifecycleOwner, Observer {
-            if(it){
+        viewModel.isNoResultFound.observe(viewLifecycleOwner) {
+            if (it) {
                 binding.tvNoResultFound.visibility = View.VISIBLE
                 binding.llSearchResults.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
-            }else{
+            } else {
                 binding.tvNoResultFound.visibility = View.GONE
             }
-        })
+        }
 
-        viewModel.searchedLocationDetailsList.observe(viewLifecycleOwner, Observer {
+        viewModel.searchedLocationDetailsList.observe(viewLifecycleOwner) {
             binding.progressBar.visibility = View.GONE
-            if(it.size == 0 || it == null){
+            if (it.isEmpty() || it == null) {
                 binding.tvNoResultFound.visibility = View.VISIBLE
-            }else{
+            } else {
                 binding.rvSearchResults.layoutManager = LinearLayoutManager(context)
                 val adapter = SearchResultAdapter(viewModel, it, onSearchedResultClick)
                 binding.rvSearchResults.adapter = adapter
                 binding.llSearchResults.visibility = View.VISIBLE
             }
-        })
+        }
 
     }
 
 
 
-    fun setupSearchBar(){
+    private fun setupSearchBar(){
         val imm: InputMethodManager =
             activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(binding.etSearchBar, 0)
