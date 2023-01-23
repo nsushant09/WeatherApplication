@@ -24,6 +24,10 @@
             android:configChanges="uiMode"
             android:exported="false" />
         <activity
+            android:name=".activity.main.fragment.settings.SettingsActivity"
+            android:configChanges="uiMode"
+            android:exported="false" />
+        <activity
             android:name=".activity.SplashActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">

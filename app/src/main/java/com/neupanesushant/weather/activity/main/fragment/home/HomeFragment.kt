@@ -1,6 +1,7 @@
 package com.neupanesushant.weather.activity.main.fragment.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,7 @@ import com.neupanesushant.weather.activity.main.MainViewModel
 import com.neupanesushant.weather.activity.main.fragment.home.adapter.DailyForecastAdapter
 import com.neupanesushant.weather.activity.main.fragment.home.adapter.HourlyForecastAdapter
 import com.neupanesushant.weather.activity.main.fragment.search.SearchFragment
-import com.neupanesushant.weather.activity.main.fragment.settings.SettingsFragment
+import com.neupanesushant.weather.activity.main.fragment.settings.SettingsActivity
 import com.neupanesushant.weather.apiserviceclass.LocationWeather
 import com.neupanesushant.weather.capitalizeWords
 import com.neupanesushant.weather.databinding.FragmentHomeBinding
@@ -31,7 +32,6 @@ class HomeFragment : Fragment() {
     private val viewModel : HomeViewModel by inject()
 
     private val searchFragment = SearchFragment()
-    private val settingFragment = SettingsFragment()
 
     private val  mainViewModel : MainViewModel by activityViewModels()
 
@@ -59,7 +59,9 @@ class HomeFragment : Fragment() {
             }
 
             ivSettingsBtn.setOnClickListener {
-                replaceFragment(settingFragment)
+                Intent(requireContext(), SettingsActivity::class.java).apply{
+                    startActivity(this)
+                }
             }
 
         }
