@@ -10,27 +10,28 @@ import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
 import android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.neupanesushant.weather.activity.main.MainViewModel
 import com.neupanesushant.weather.activity.main.fragment.search.adapter.SearchResultAdapter
 import com.neupanesushant.weather.databinding.FragmentSearchBinding
 import org.koin.android.ext.android.inject
 
 
-class SearchFragment : Fragment() {
+class SearchFragment(private val searchListener: SearchListener) : Fragment() {
 
-    private lateinit var _binding : FragmentSearchBinding
+    interface SearchListener {
+        fun onSearchResultClick(cityName: String, latitude: Double, longitude: Double)
+    }
+
+    private lateinit var _binding: FragmentSearchBinding
     private val binding get() = _binding
 
-    private val viewModel : SearchViewModel by inject()
+    private val viewModel: SearchViewModel by inject()
 
-    private val  mainViewModel : MainViewModel by activityViewModels()
-
-    private val onSearchedResultClick : (String, Double, Double) -> Unit = { cityName, latitude, longitude ->
-        mainViewModel.setLocationCoordinates(cityName,latitude, longitude)
-        parentFragmentManager.popBackStack()
-    }
+    private val onSearchedResultClick: (String, Double, Double) -> Unit =
+        { cityName, latitude, longitude ->
+            searchListener.onSearchResultClick(cityName, latitude, longitude)
+            activity?.onBackPressed()
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,8 +99,7 @@ class SearchFragment : Fragment() {
     }
 
 
-
-    private fun setupSearchBar(){
+    private fun setupSearchBar() {
         val imm: InputMethodManager =
             activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(binding.etSearchBar, 0)
@@ -110,5 +110,14 @@ class SearchFragment : Fragment() {
     }
 
 
+    companion object {
 
+        private var instance: SearchFragment? = null
+        fun getInstance(searchListener: SearchListener): SearchFragment {
+            if (instance == null) {
+                instance = SearchFragment(searchListener)
+            }
+            return instance!!
+        }
+    }
 }

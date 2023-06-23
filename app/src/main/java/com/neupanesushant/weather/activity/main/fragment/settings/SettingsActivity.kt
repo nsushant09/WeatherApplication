@@ -1,22 +1,12 @@
 package com.neupanesushant.weather.activity.main.fragment.settings
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.fragment.app.Fragment
-import com.neupanesushant.weather.R
-import com.neupanesushant.weather.activity.main.MainViewModel
 import com.neupanesushant.weather.databinding.FragmentSettingsBinding
-import org.koin.android.compat.SharedViewModelCompat.sharedViewModel
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class SettingsActivity : AppCompatActivity() {

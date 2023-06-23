@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel: MainViewModel by viewModels()
     private val homeFragment = HomeFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,13 +21,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         val latitude = intent.extras?.get("currentLocationLatitude") as Double
         val longitude = intent.extras?.get("currentLocationLongitude") as Double
-        viewModel.setLocationCoordinates(LocationCoordinates(latitude, longitude))
-        loadHomeFragment()
+        loadHomeFragment(latitude.toString(), longitude.toString())
     }
 
-    private fun loadHomeFragment() {
+    private fun loadHomeFragment(latitude: String, longitude: String) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putString("currentLocationLatitude", latitude)
+        bundle.putString("currentLocationLongitude", longitude)
+        homeFragment.arguments = bundle
         fragmentTransaction.add(R.id.fragment_container, homeFragment).commit()
     }
 }

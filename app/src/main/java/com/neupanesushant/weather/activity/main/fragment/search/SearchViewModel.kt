@@ -13,7 +13,8 @@ import com.neupanesushant.weather.capitalizeWords
 import kotlinx.coroutines.launch
 import java.util.*
 
-class SearchViewModel(val application: Application, private val retrofitInstance : WeatherAPI) : ViewModel() {
+class SearchViewModel(val application: Application, private val retrofitInstance: WeatherAPI) :
+    ViewModel() {
 
     private val KEY: String = "23c28e4ade04201b9448d391e0cf9832"
 
@@ -36,25 +37,27 @@ class SearchViewModel(val application: Application, private val retrofitInstance
     }
 
     fun getSearchResult(cityName: String) {
-        arrayListOfLocationWeather.clear()
-        try {
-            _addressList.value = geocoder.getFromLocationName(cityName, 10)
-            if (addressList.value != null && addressList.value?.size != 0) {
-                _addressList.value?.forEach {
-                    getLocationWeatherFromAPI(
-                        it.latitude.toString(),
-                        it.longitude.toString(),
-                        it,
-                        cityName
-                    )
+        viewModelScope.launch {
+            arrayListOfLocationWeather.clear()
+            try {
+                _addressList.value = geocoder.getFromLocationName(cityName, 10)
+                if (addressList.value != null && addressList.value?.size != 0) {
+                    _addressList.value?.forEach {
+                        getLocationWeatherFromAPI(
+                            it.latitude.toString(),
+                            it.longitude.toString(),
+                            it,
+                            cityName
+                        )
+                    }
+
+                } else {
+                    _isNoResultFound.value = true
                 }
 
-            } else {
+            } catch (e: Exception) {
                 _isNoResultFound.value = true
             }
-
-        } catch (e: Exception) {
-            _isNoResultFound.value = true
         }
     }
 
