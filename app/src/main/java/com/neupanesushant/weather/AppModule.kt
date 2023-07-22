@@ -2,8 +2,9 @@ package com.neupanesushant.weather
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.neupanesushant.weather.activity.main.fragment.home.HomeViewModel
-import com.neupanesushant.weather.activity.main.fragment.search.SearchViewModel
+import com.neupanesushant.weather.data.WeatherAPI
+import com.neupanesushant.weather.view.main.fragment.home.HomeViewModel
+import com.neupanesushant.weather.view.main.fragment.search.SearchViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel

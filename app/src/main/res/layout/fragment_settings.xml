@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.main.fragment.settings.SettingsFragment"
+    tools:context=".view.main.fragment.settings.SettingsFragment"
     android:background="?attr/colorPrimary"
     android:paddingHorizontal="16dp"
     >
