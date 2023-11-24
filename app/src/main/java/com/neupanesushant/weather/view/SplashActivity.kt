@@ -8,14 +8,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.*
 import com.neupanesushant.weather.databinding.ActivitySplashBinding
-import com.neupanesushant.weather.extras.PermissionManager
-import com.neupanesushant.weather.services.LocationProvider
-import com.neupanesushant.weather.view.main.MainActivity
+import com.neupanesushant.weather.domain.extras.PermissionManager
+import com.neupanesushant.weather.domain.usecase.LocationProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
-    private lateinit var currentLocation: Location
     private lateinit var locationProvider: LocationProvider
 
     companion object {
@@ -30,31 +31,36 @@ class SplashActivity : AppCompatActivity() {
         getCurrentLocation()
     }
 
-    private fun startNextActivity() {
+    private fun startNextActivity(location: Location) {
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("currentLocationLatitude", currentLocation.latitude)
-        intent.putExtra("currentLocationLongitude", currentLocation.longitude)
+        intent.putExtra("currentLocationLatitude", location.latitude)
+        intent.putExtra("currentLocationLongitude", location.longitude)
         startActivity(intent)
         finish()
     }
 
+    private fun onLocationFetched(location: Location?) {
+        if (location == null) locationProvider.startLocationSetting()
+        startNextActivity(location!!)
+    }
 
     private fun getCurrentLocation() {
-        if (PermissionManager.hasCoarseLocationPermission(this) && PermissionManager.hasFineLocationPermission(
-                this
-            )
-        ) {
-            locationProvider.fetchLocation() {
-                if (it == null)
-                    locationProvider.startLocationSetting()
-                else {
-                    currentLocation = it
-                    startNextActivity()
-                }
-            }
-        } else {
+
+        if (!checkPermission()) {
             PermissionManager.requestFineAndCoarseLocationPermission(this)
+            return
         }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            locationProvider.fetchLocation { location ->
+                onLocationFetched(location)
+            }
+        }
+    }
+
+    private fun checkPermission(): Boolean {
+        return PermissionManager.hasCoarseLocationPermission(this)
+                && PermissionManager.hasFineLocationPermission(this)
     }
 
 
