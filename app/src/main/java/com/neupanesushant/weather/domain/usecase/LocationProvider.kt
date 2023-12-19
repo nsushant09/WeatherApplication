@@ -55,11 +55,6 @@ class LocationProvider(private val activity: Activity) {
         }
     }
 
-    fun startLocationSetting() {
-        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-        activity.startActivityForResult(intent, SplashActivity.LOCATION_SETTING_CODE)
-    }
-
     private fun isLocationEnabled(): Boolean {
         val locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
